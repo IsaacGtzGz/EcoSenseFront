@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ export class HeaderComponent {
   nombreUsuario: string = ''; // Inicializa el nombre de usuario
   estaLogueado: boolean = false; // Inicializa el estado de logueo
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
     this.verificarSesion();
 
     // Escucha cambios de ruta
@@ -24,20 +25,18 @@ export class HeaderComponent {
   }
 
   verificarSesion() {
-    const user = localStorage.getItem('usuario');
+    this.estaLogueado = this.authService.isLoggedIn();
 
-    if (user) {
-      const parsed = JSON.parse(user);
-      this.nombreUsuario = parsed.nombre;
-      this.estaLogueado = true; // Si hay usuario, se considera logueado
+    if (this.estaLogueado) {
+      const user = this.authService.getUser();
+      this.nombreUsuario = user?.nombre || user?.usuario || 'Usuario';
     } else {
       this.nombreUsuario = '';
-      this.estaLogueado = false; // Si no hay usuario, no está logueado
-     }
+    }
   }
 
   cerrarSesion() {
-    localStorage.removeItem('usuario'); // elimina el usuario del localStorage
+    this.authService.logout(); // Usa el método del servicio
     this.router.navigate(['/login']); // redirige al login
   }
 }

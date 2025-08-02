@@ -26,10 +26,7 @@ export class LoginComponent {
     this.authService.login(usuario).subscribe({
       next: (res) => {
         console.log('Login exitoso:', res);
-        // Aquí podrías guardar el JWT/token si lo usas
-
-        localStorage.setItem('usuario', JSON.stringify(res));
-        // Redirigir al dashboard después del login exitoso
+        // El token ya se guarda automáticamente en el AuthService
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
@@ -39,9 +36,8 @@ export class LoginComponent {
     });
   }
 
-    ngOnInit(): void {
-    const user = localStorage.getItem('usuario');
-    if (user) {
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']); // redirige automáticamente si ya estás logueado
     }
   }
