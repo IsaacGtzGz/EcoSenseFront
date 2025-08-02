@@ -1,0 +1,133 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Panel Principal</h1>
+    <p>Monitoreo en tiempo real de la calidad del aire</p>
+  </div>
+
+  <div class="stats-grid" *ngIf="lectura">
+    <!-- CO₂ -->
+    <div class="stat-card">
+      <div class="stat-icon co2">🌬️</div>
+      <div class="stat-info">
+        <h3>{{ lectura.co2 }} ppm</h3>
+        <p>Dióxido de Carbono (CO₂)</p>
+        <span class="status" [ngClass]="getEstado(lectura.co2, 'co2')">{{ getTextoEstado(lectura.co2, 'co2') }}</span>
+      </div>
+    </div>
+
+    <!-- PM1.0 -->
+    <div class="stat-card">
+      <div class="stat-icon pm">🦠</div>
+      <div class="stat-info">
+        <h3>{{ lectura.pm1_0 }} µg/m³</h3>
+        <p>Partículas Finas (PM1.0)</p>
+        <span class="status" [ngClass]="getEstado(lectura.pm1_0, 'pm1_0')">{{ getTextoEstado(lectura.pm1_0, 'pm1_0')
+          }}</span>
+      </div>
+    </div>
+
+    <!-- PM2.5 -->
+    <div class="stat-card">
+      <div class="stat-icon pm">💨</div>
+      <div class="stat-info">
+        <h3>{{ lectura.pm2_5 }} µg/m³</h3>
+        <p>Partículas Finas (PM2.5)</p>
+        <span class="status" [ngClass]="getEstado(lectura.pm2_5, 'pm2_5')">{{ getTextoEstado(lectura.pm2_5, 'pm2_5')
+          }}</span>
+      </div>
+    </div>
+
+    <!-- PM10 -->
+    <div class="stat-card">
+      <div class="stat-icon pm">🏭</div>
+      <div class="stat-info">
+        <h3>{{ lectura.pm10 }} µg/m³</h3>
+        <p>Partículas Gruesas (PM10)</p>
+        <span class="status" [ngClass]="getEstado(lectura.pm10, 'pm10')">{{ getTextoEstado(lectura.pm10, 'pm10')
+          }}</span>
+      </div>
+    </div>
+
+    <!-- Temperatura -->
+    <div class="stat-card">
+      <div class="stat-icon temp">🌡️</div>
+      <div class="stat-info">
+        <h3>{{ lectura.temperatura }} °C</h3>
+        <p>Temperatura Ambiental</p>
+        <span class="status" [ngClass]="getEstado(lectura.temperatura, 'temperatura')">{{
+          getTextoEstado(lectura.temperatura, 'temperatura') }}</span>
+      </div>
+    </div>
+
+    <!-- Humedad -->
+    <div class="stat-card">
+      <div class="stat-icon humidity">💧</div>
+      <div class="stat-info">
+        <h3>{{ lectura.humedad }} %</h3>
+        <p>Humedad Relativa</p>
+        <span class="status" [ngClass]="getEstado(lectura.humedad, 'humedad')">{{ getTextoEstado(lectura.humedad,
+          'humedad') }}</span>
+      </div>
+    </div>
+
+    <!-- Presión -->
+    <div class="stat-card">
+      <div class="stat-icon pressure">⏲️</div>
+      <div class="stat-info">
+        <h3>{{ lectura.presion }} hPa</h3>
+        <p>Presión Atmosférica</p>
+        <span class="status" [ngClass]="getEstado(lectura.presion, 'presion')">{{ getTextoEstado(lectura.presion,
+          'presion') }}</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="main-content">
+    <div class="chart-section">
+      <h2>Tendencias (Últimas 24 horas)</h2>
+      <canvas #chartCanvas id="lineChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="alerts-section">
+    <h2>Alertas Recientes</h2>
+
+    <div class="alert-item" *ngFor="let alerta of alertas"
+      [ngClass]="'alert-nivel-' + obtenerNivelAlerta(alerta).toLowerCase()">
+      <div class="alert-icon" [ngClass]="'alert-' + obtenerNivelAlerta(alerta).toLowerCase()">
+        {{ obtenerIconoAlerta(alerta.tipoAlerta || 'General') }}
+      </div>
+      <div class="alert-info">
+        <h4>{{ alerta.tipoAlerta }} - {{ obtenerNivelAlerta(alerta) }}</h4>
+        <p class="alert-message">{{ generarMensajeAlerta(alerta) }}</p>
+        <p class="alert-time">{{ calcularTiempo(alerta.timestamp) }} - {{ obtenerUbicacionAlerta() }}</p>
+      </div>
+    </div>
+
+    <div *ngIf="alertas.length === 0">
+      <p>No hay alertas recientes.</p>
+    </div>
+  </div>
+
+  <div class="devices-section">
+    <h2>Dispositivos Activos</h2>
+
+    <div class="device-item" *ngFor="let d of dispositivos">
+      <div class="device-info">
+        <h4>{{ d.nombre }}</h4>
+        <p>{{ d.ubicacion }} - Último reporte: {{ d.ultimaLectura ? calcularTiempo(d.ultimaLectura.toString()) : 'Sin
+          datos' }}</p>
+      </div>
+      <div class="device-status">
+        <div class="status-dot" [ngClass]="{ 'online': estaEnLinea(d), 'offline': !estaEnLinea(d) }"></div>
+        <span>{{ estaEnLinea(d) ? 'En línea' : 'Sin conexión' }}</span>
+      </div>
+    </div>
+
+    <div *ngIf="dispositivos.length === 0">
+      <p>No hay dispositivos registrados.</p>
+    </div>
+  </div>
+
+</div>

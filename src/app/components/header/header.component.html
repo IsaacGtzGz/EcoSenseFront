@@ -1,0 +1,23 @@
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">🍃</div>
+    <h2>EcoSense</h2>
+    <div>
+      <small *ngIf="!estaLogueado">Monitoreo Inteligente</small>
+      <small *ngIf="estaLogueado">Panel de Control</small>
+    </div>
+  </div>
+
+  <nav class="nav-menu" *ngIf="!estaLogueado">
+    <a routerLink="/">Inicio</a>
+    <a routerLink="/acerca-de">Acerca de</a>
+    <a routerLink="/contacto">Contáctanos</a>
+    <a routerLink="/login">Iniciar sesión</a>
+  </nav>
+
+  <div class="user-info" *ngIf="estaLogueado">
+    <div class="user-avatar">👤</div>
+    <span>{{ nombreUsuario }}</span>
+    <button class="btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
+  </div>
+</header>

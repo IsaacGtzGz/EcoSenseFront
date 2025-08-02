@@ -1,0 +1,71 @@
+<div class="login-page">
+  <div class="login-container">
+    <!-- Panel izquierdo con branding -->
+    <div class="login-brand">
+      <div class="brand-content">
+        <img src="assets/img/Logotipo_EcoSense.png" alt="EcoSense" class="brand-logo" />
+        <h1>EcoSense</h1>
+        <p>Sistema de Monitoreo Ambiental Inteligente</p>
+        <div class="brand-features">
+          <div class="feature">
+            <span class="feature-icon">🌱</span>
+            <span>Monitoreo en tiempo real</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">📊</span>
+            <span>Análisis de tendencias</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">⚠️</span>
+            <span>Alertas inteligentes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel derecho con formulario -->
+    <div class="login-form-panel">
+      <div class="login-card">
+        <div class="login-header">
+          <h2>Iniciar Sesión</h2>
+          <p>Accede a tu panel de control</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+          <div class="form-group">
+            <label for="correo">
+              <span class="label-icon">📧</span>
+              Correo electrónico
+            </label>
+            <input type="email" id="correo" name="correo" [(ngModel)]="correo" placeholder="ejemplo@correo.com" required
+              class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label for="password">
+              <span class="label-icon">🔒</span>
+              Contraseña
+            </label>
+            <input type="password" [(ngModel)]="password" name="password" id="password"
+              placeholder="Ingresa tu contraseña" required class="form-input" />
+          </div>
+
+          <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
+            <span *ngIf="!loginForm.pending">Iniciar sesión</span>
+            <span *ngIf="loginForm.pending" class="loading">Ingresando...</span>
+          </button>
+
+          <div *ngIf="error" class="error-message">
+            <span class="error-icon">⚠️</span>
+            {{ error }}
+          </div>
+        </form>
+
+        <div class="help-section">
+          <p>¿Necesitas acceso? <strong>Contacta al administrador</strong></p>
+          <p class="version-info">EcoSense v1.0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
