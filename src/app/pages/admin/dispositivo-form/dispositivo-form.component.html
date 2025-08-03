@@ -1,0 +1,114 @@
+<div class="form-container">
+    <div class="form-header">
+        <h1><i class="fas fa-satellite-dish"></i> {{ isEditing ? 'Editar Dispositivo' : 'Nuevo Dispositivo' }}</h1>
+        <p>{{ isEditing ? 'Modifica los datos del dispositivo sensor' : 'Registra un nuevo sensor de calidad del aire'
+            }}</p>
+    </div>
+
+    <!-- Mensajes de estado -->
+    <div class="alert alert-success" *ngIf="success">
+        <i class="fas fa-check-circle"></i>
+        {{ success }}
+    </div>
+
+    <div class="alert alert-error" *ngIf="error">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ error }}
+    </div>
+
+    <!-- Indicador de carga -->
+    <div class="loading-overlay" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>{{ isEditing ? 'Guardando cambios...' : 'Creando dispositivo...' }}</p>
+    </div>
+
+    <form [formGroup]="dispositivoForm" (ngSubmit)="onSubmit()" class="dispositivo-form" autocomplete="nope" novalidate
+        data-form="new-device-form">
+        <div class="form-grid">
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">
+                    <i class="fas fa-tag"></i>
+                    Nombre del Dispositivo
+                </label>
+                <input type="text" id="nombre" formControlName="nombre" class="form-control"
+                    [class.error]="getFieldError('nombre')" placeholder="Ej: Sensor Aire Oficina A" autocomplete="nope"
+                    name="device-name-creation" spellcheck="false">
+                <div class="error-message">{{ getFieldError('nombre') }}</div>
+            </div>
+
+            <!-- Ubicación -->
+            <div class="form-group">
+                <label for="ubicacion">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Ubicación
+                </label>
+                <input type="text" id="ubicacion" formControlName="ubicacion" class="form-control"
+                    [class.error]="getFieldError('ubicacion')" placeholder="Ej: Edificio A, Planta 2, Oficina 201"
+                    autocomplete="nope" name="device-location-creation" spellcheck="false">
+                <div class="error-message">{{ getFieldError('ubicacion') }}</div>
+            </div>
+
+            <!-- MAC Address -->
+            <div class="form-group">
+                <label for="macAddress">
+                    <i class="fas fa-network-wired"></i>
+                    Dirección MAC
+                </label>
+                <input type="text" id="macAddress" formControlName="macAddress" class="form-control"
+                    [class.error]="getFieldError('macAddress')" placeholder="AA:BB:CC:DD:EE:FF" autocomplete="nope"
+                    name="device-mac-creation" spellcheck="false" (input)="formatMacAddress($event)" maxlength="17">
+                <div class="help-text">Formato: XX:XX:XX:XX:XX:XX (se formatea automáticamente)</div>
+                <div class="error-message">{{ getFieldError('macAddress') }}</div>
+            </div>
+
+            <!-- Usuario Responsable -->
+            <div class="form-group">
+                <label for="idUsuario">
+                    <i class="fas fa-user"></i>
+                    Usuario Responsable
+                </label>
+                <select id="idUsuario" formControlName="idUsuario" class="form-control"
+                    [class.error]="getFieldError('idUsuario')">
+                    <option value="">Selecciona un usuario responsable</option>
+                    <option *ngFor="let usuario of usuarios" [value]="usuario.idUsuario">
+                        {{ usuario.nombre }} ({{ usuario.correo }})
+                    </option>
+                </select>
+                <div class="help-text">Usuario que será responsable de este dispositivo</div>
+                <div class="error-message">{{ getFieldError('idUsuario') }}</div>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="info-section" *ngIf="!isEditing">
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Información importante</h3>
+                    <ul>
+                        <li>El dispositivo debe estar físicamente configurado antes del registro</li>
+                        <li>La dirección MAC debe ser única y válida</li>
+                        <li>El usuario responsable recibirá notificaciones del dispositivo</li>
+                        <li>Una vez creado, el dispositivo comenzará a enviar datos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="loading">
+                <i class="fas fa-times"></i>
+                Cancelar
+            </button>
+
+            <button type="submit" class="btn btn-primary" [disabled]="dispositivoForm.invalid || loading">
+                <i class="fas fa-save"></i>
+                {{ isEditing ? 'Actualizar Dispositivo' : 'Crear Dispositivo' }}
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,106 @@
+<div class="usuarios-container">
+  <div class="usuarios-header">
+    <h2>
+      <i class="fas fa-users"></i>
+      Gestión de Usuarios
+    </h2>
+    <button class="btn btn-primary" (click)="nuevoUsuario()">
+      <i class="fas fa-plus"></i>
+      Nuevo Usuario
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando usuarios...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error-container">
+    <i class="fas fa-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+    <button class="btn btn-secondary" (click)="cargarUsuarios()">Reintentar</button>
+  </div>
+
+  <!-- Lista de usuarios -->
+  <div *ngIf="!loading && !error" class="usuarios-grid">
+    <div class="usuario-card" *ngFor="let usuario of usuarios">
+      <div class="usuario-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+
+      <div class="usuario-info">
+        <h3>{{ usuario.nombre }}</h3>
+        <p class="usuario-email">{{ usuario.correo }}</p>
+        <p class="usuario-telefono" *ngIf="usuario.telefono">
+          <i class="fas fa-phone"></i>
+          {{ usuario.telefono }}
+        </p>
+        <span class="role-badge" [ngClass]="getRoleBadgeClass(usuario.rol)">
+          {{ usuario.rol }}
+        </span>
+      </div>
+
+      <div class="usuario-actions">
+        <button class="btn btn-edit" (click)="editarUsuario(usuario.idUsuario!)" title="Editar">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-delete" (click)="eliminarUsuario(usuario)" title="Eliminar">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && !error && usuarios.length === 0" class="empty-state">
+    <i class="fas fa-users-slash"></i>
+    <h3>No hay usuarios registrados</h3>
+    <p>Crea el primer usuario para comenzar</p>
+    <button class="btn btn-primary" (click)="nuevoUsuario()">
+      <i class="fas fa-plus"></i>
+      Crear Usuario
+    </button>
+  </div>
+</div>
+
+<!-- Modal de confirmación para eliminar -->
+<div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3>Confirmar Eliminación</h3>
+    </div>
+
+    <div class="modal-body">
+      <p>¿Estás seguro de que deseas eliminar al usuario?</p>
+      <div class="user-preview" *ngIf="userToDelete">
+        <div class="user-avatar-small">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="user-info-small">
+          <strong>{{ userToDelete.nombre }}</strong>
+          <p>{{ userToDelete.correo }}</p>
+        </div>
+      </div>
+      <p class="warning-text">
+        <i class="fas fa-info-circle"></i>
+        Esta acción no se puede deshacer.
+      </p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeDeleteModal()">
+        <i class="fas fa-times"></i>
+        Cancelar
+      </button>
+      <button class="btn btn-danger" (click)="confirmDelete()">
+        <i class="fas fa-trash-alt"></i>
+        Eliminar Usuario
+      </button>
+    </div>
+  </div>
+</div>

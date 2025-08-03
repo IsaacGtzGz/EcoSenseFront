@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSense - Inicio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: #2c5f2d;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            color: #4caf50;
+        }
+
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600"><rect fill="%23e8f5e8" width="1000" height="600"/><text x="50%" y="50%" text-anchor="middle" fill="%23666" font-size="24">Imagen de aire limpio</text></svg>');
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background: #4caf50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+        }
+
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #2c5f2d;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: #4caf50;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .footer {
+            background: #2c5f2d;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🍃</div>
+            <div>
+                <h2>EcoSense</h2>
+                <small>Monitoreo Inteligente</small>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="#inicio">Inicio</a>
+            <a href="02-acerca-de.html">Acerca de</a>
+            <a href="10-contacto.html">Contáctanos</a>
+            <a href="03-login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>Monitorea tu entorno. Respira mejor.</h1>
+        <p>Sistema integral de monitoreo de calidad del aire en tiempo real</p>
+        <a href="#features" class="btn-primary">Conoce más</a>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Nuestros Sensores</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌬️</div>
+                <h3>Sensor CO₂</h3>
+                <p>Monitoreo continuo de dióxido de carbono para espacios seguros y bien ventilados.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💨</div>
+                <h3>Sensor PM2.5</h3>
+                <p>Detección de partículas finas que afectan la calidad del aire y la salud respiratoria.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌡️</div>
+                <h3>Humedad y Temperatura</h3>
+                <p>Control de condiciones ambientales para el máximo confort y bienestar.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h3>EcoSense</h3>
+        <p>contacto@ecosense.com</p>
+        <p>Tel: 477 908 73 23</p>
+        <p>&copy; 2025 EcoSense. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

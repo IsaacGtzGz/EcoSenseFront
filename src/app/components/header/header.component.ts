@@ -11,7 +11,9 @@ import { AuthService } from '../../services/auth.service';
 
 export class HeaderComponent {
   nombreUsuario: string = ''; // Inicializa el nombre de usuario
+  rolUsuario: string = ''; // Rol del usuario
   estaLogueado: boolean = false; // Inicializa el estado de logueo
+  esAdministrador: boolean = false; // Para verificar si es administrador
 
   constructor(private router: Router, private authService: AuthService) {
     this.verificarSesion();
@@ -30,8 +32,12 @@ export class HeaderComponent {
     if (this.estaLogueado) {
       const user = this.authService.getUser();
       this.nombreUsuario = user?.nombre || user?.usuario || 'Usuario';
+      this.rolUsuario = this.authService.getRole() || 'Sin rol';
+      this.esAdministrador = this.authService.isAdmin();
     } else {
       this.nombreUsuario = '';
+      this.rolUsuario = '';
+      this.esAdministrador = false;
     }
   }
 

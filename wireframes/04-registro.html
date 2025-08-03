@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSense - Registro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #2c5f2d;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            color: #4caf50;
+        }
+
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 140px);
+            padding: 2rem;
+        }
+
+        .register-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-header h1 {
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c5f2d;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .form-group.error input {
+            border-color: #f44336;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: #4caf50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-register:hover {
+            background: #45a049;
+        }
+
+        .login-link {
+            text-align: center;
+        }
+
+        .login-link p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-link a {
+            color: #4caf50;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .terms {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .terms a {
+            color: #4caf50;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: #2c5f2d;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🍃</div>
+            <div>
+                <h2>EcoSense</h2>
+                <small>Monitoreo Inteligente</small>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="01-landing-page.html">Inicio</a>
+            <a href="02-acerca-de.html">Acerca de</a>
+            <a href="10-contacto.html">Contáctanos</a>
+            <a href="03-login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <h1>Crear Cuenta</h1>
+                <p>Únete a EcoSense y comienza a monitorear tu ambiente</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Nombre completo</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Ingresa tu nombre completo" required>
+                    <div class="error-message">Este campo es obligatorio</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                    <div class="error-message">Ingresa un email válido</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required>
+                    <div class="error-message">La contraseña debe tener al menos 8 caracteres</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Repetir contraseña</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                        placeholder="Confirma tu contraseña" required>
+                    <div class="error-message">Las contraseñas no coinciden</div>
+                </div>
+
+                <button type="submit" class="btn-register">Registrarse</button>
+            </form>
+
+            <div class="terms">
+                <p>Al registrarte, aceptas nuestros <a href="#">Términos y Condiciones</a> y <a href="#">Política de
+                        Privacidad</a></p>
+            </div>
+
+            <div class="login-link">
+                <p>¿Ya tienes cuenta?</p>
+                <a href="03-login.html">Inicia sesión aquí</a>
+            </div>
+            <form id="registerForm">
+                <div class="register-header">
+                    <h1>Registro</h1>
+                    <p>Crea tu cuenta EcoSense</p>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" required>
+                </div>
+                <div class="form-group">
+                    <label for="empresa">Empresa o sector (opcional)</label>
+                    <input type="text" id="empresa">
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol</label>
+                    <select id="rol" required>
+                        <option value="usuario">Usuario estándar</option>
+                        <option value="admin">Administrador</option>
+                        <option value="tecnico">Técnico de mantenimiento</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono (opcional)</label>
+                    <input type="tel" id="telefono">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-register">Registrarse</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 EcoSense. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('La contraseña debe tener al menos 8 caracteres');
+                return;
+            }
+
+            alert('Registro exitoso! Redirigiendo al dashboard...');
+            window.location.href = '05-dashboard.html';
+        });
+    </script>
+</body>
+
+</html>

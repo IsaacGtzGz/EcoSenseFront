@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSense - Acerca de</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: #2c5f2d;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            color: #4caf50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .mission-section {
+            background: #f8f9fa;
+            padding: 3rem;
+            border-radius: 10px;
+            margin-bottom: 4rem;
+        }
+
+        .mission-section h2 {
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .importance-section {
+            margin-bottom: 4rem;
+        }
+
+        .importance-section h2 {
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .importance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .importance-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .importance-card h3 {
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        .team-section h2 {
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            background: #4caf50;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .team-card h3 {
+            color: #2c5f2d;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card .role {
+            color: #666;
+            font-style: italic;
+        }
+
+        .footer {
+            background: #2c5f2d;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🍃</div>
+            <div>
+                <h2>EcoSense</h2>
+                <small>Monitoreo Inteligente</small>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="01-landing-page.html">Inicio</a>
+            <a href="#acerca">Acerca de</a>
+            <a href="10-contacto.html">Contáctanos</a>
+            <a href="03-login.html">Iniciar sesión</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="hero-section">
+            <h1>Acerca de EcoSense</h1>
+            <p>Conoce más sobre nuestro proyecto y equipo</p>
+        </section>
+
+        <section class="mission-section">
+            <h2>Nuestra Misión</h2>
+            <p>
+                En EcoSense, nuestra misión es mejorar la calidad del aire y la salud de las personas mediante
+                tecnología accesible e inteligente. Creemos que todos merecen respirar aire limpio y vivir en
+                ambientes saludables. Por eso desarrollamos soluciones innovadoras que monitoren, alerten y
+                mejoren automáticamente la calidad del aire en espacios interiores.
+            </p>
+        </section>
+
+        <section class="importance-section">
+            <h2>¿Por qué es importante monitorear la calidad del aire?</h2>
+            <div class="importance-grid">
+                <div class="importance-card">
+                    <h3>Salud Respiratoria</h3>
+                    <p>La mala calidad del aire puede causar problemas respiratorios, alergias y enfermedades a largo
+                        plazo.</p>
+                </div>
+                <div class="importance-card">
+                    <h3>Productividad</h3>
+                    <p>Los espacios mal ventilados reducen la concentración, causan fatiga y disminuyen el rendimiento.
+                    </p>
+                </div>
+                <div class="importance-card">
+                    <h3>Bienestar General</h3>
+                    <p>Un ambiente con aire limpio mejora el estado de ánimo, la calidad del sueño y la salud general.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="team-section">
+            <h2>Nuestro Equipo</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3>Isaac Gutiérrez Gómez</h3>
+                    <p class="role">Frontend y Diseño de Componentes</p>
+                    <p>Especialista en desarrollo web y experiencia de usuario.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">🛠️</div>
+                    <h3>Miguel Ernesto Jasso Flores</h3>
+                    <p class="role">Gestión de Proyecto y Hardware</p>
+                    <p>Experto en Arduino y gestión de proyectos tecnológicos.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">🗄️</div>
+                    <h3>Ulises Macias Estrada</h3>
+                    <p class="role">Backend y Bases de Datos</p>
+                    <p>Desarrollador backend especializado en bases de datos.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <h3>EcoSense</h3>
+        <p>contacto@ecosense.com</p>
+        <p>Tel: 477 908 73 23</p>
+        <p>&copy; 2025 EcoSense. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

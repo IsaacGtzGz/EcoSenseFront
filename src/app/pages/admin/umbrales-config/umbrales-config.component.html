@@ -1,0 +1,122 @@
+<div class="umbrales-config-container">
+  <div class="header-section">
+    <h1><i class="fas fa-cogs"></i> Configuración de Umbrales</h1>
+    <p class="subtitle">Configure los umbrales de alerta para cada dispositivo</p>
+  </div>
+
+  <!-- Mostrar errores -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{ error }}
+  </div>
+
+  <!-- Mostrar éxito -->
+  <div class="alert alert-success" *ngIf="success">
+    <i class="fas fa-check-circle"></i>
+    {{ success }}
+  </div>
+
+  <div class="config-content">
+    <!-- Selector de dispositivo -->
+    <div class="device-selector">
+      <h3><i class="fas fa-satellite-dish"></i> Seleccionar Dispositivo</h3>
+      <select class="form-control" [(ngModel)]="dispositivoSeleccionado" (change)="seleccionarDispositivo()"
+        [disabled]="loading">
+        <option value="">-- Seleccione un dispositivo --</option>
+        <option *ngFor="let dispositivo of dispositivos" [value]="dispositivo.idDispositivo">
+          {{ dispositivo.nombre }} - {{ dispositivo.ubicacion }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Configuración de umbrales -->
+    <div class="umbral-form" *ngIf="umbralActual">
+      <h3><i class="fas fa-sliders-h"></i> Configurar Umbrales</h3>
+
+      <div class="form-grid">
+        <!-- CO2 -->
+        <div class="form-group">
+          <label><i class="fas fa-wind"></i> CO₂ Máximo (ppm)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.co2Max" min="300" max="5000"
+            placeholder="1000">
+          <small class="form-text">Rango recomendado: 800-1200 ppm</small>
+        </div>
+
+        <!-- PM1.0 -->
+        <div class="form-group">
+          <label><i class="fas fa-smog"></i> PM1.0 Máximo (µg/m³)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.pm1Max" min="0" max="500"
+            placeholder="50">
+          <small class="form-text">Rango recomendado: 25-75 µg/m³</small>
+        </div>
+
+        <!-- PM2.5 -->
+        <div class="form-group">
+          <label><i class="fas fa-cloud"></i> PM2.5 Máximo (µg/m³)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.pm2_5Max" min="0" max="300"
+            placeholder="35">
+          <small class="form-text">Rango recomendado: 25-50 µg/m³</small>
+        </div>
+
+        <!-- PM10 -->
+        <div class="form-group">
+          <label><i class="fas fa-industry"></i> PM10 Máximo (µg/m³)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.pm10Max" min="0" max="500"
+            placeholder="150">
+          <small class="form-text">Rango recomendado: 100-200 µg/m³</small>
+        </div>
+
+        <!-- Temperatura Máxima -->
+        <div class="form-group">
+          <label><i class="fas fa-thermometer-three-quarters"></i> Temperatura Máxima (°C)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.temperaturaMax" min="15" max="50"
+            placeholder="30">
+          <small class="form-text">Rango recomendado: 28-32°C</small>
+        </div>
+
+        <!-- Humedad Máxima -->
+        <div class="form-group">
+          <label><i class="fas fa-tint"></i> Humedad Máxima (%)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.humedadMax" min="0" max="100"
+            placeholder="70">
+          <small class="form-text">Rango recomendado: 60-80%</small>
+        </div>
+
+        <!-- Presión Máxima -->
+        <div class="form-group">
+          <label><i class="fas fa-tachometer-alt"></i> Presión Máxima (hPa)</label>
+          <input type="number" class="form-control" [(ngModel)]="umbralActual.presionMax" min="900" max="1100"
+            placeholder="1050">
+          <small class="form-text">Rango recomendado: 1030-1080 hPa</small>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button class="btn btn-primary" (click)="guardarUmbral()" [disabled]="loading">
+          <i class="fas fa-save"></i>
+          <span *ngIf="!loading">Guardar Umbrales</span>
+          <span *ngIf="loading">Guardando...</span>
+        </button>
+
+        <button class="btn btn-secondary" routerLink="/dashboard">
+          <i class="fas fa-arrow-left"></i>
+          Volver al Dashboard
+        </button>
+      </div>
+    </div>
+
+    <!-- Estado cuando no hay dispositivo seleccionado -->
+    <div class="empty-state" *ngIf="!umbralActual && !loading">
+      <i class="fas fa-cogs fa-3x"></i>
+      <h3>Seleccione un dispositivo</h3>
+      <p>Elija un dispositivo de la lista para configurar sus umbrales de alerta</p>
+    </div>
+
+    <!-- Estado de carga -->
+    <div class="loading-state" *ngIf="loading">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+      <p>Cargando...</p>
+    </div>
+  </div>
+</div>

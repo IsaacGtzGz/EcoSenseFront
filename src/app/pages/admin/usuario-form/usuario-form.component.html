@@ -1,0 +1,178 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditing ? 'Editar Usuario' : 'Nuevo Usuario' }}</h1>
+    <p>{{ isEditing ? 'Modifica los datos del usuario' : 'Completa los datos para crear un nuevo usuario' }}</p>
+  </div>
+
+  <!-- Mensajes de estado -->
+  <div class="alert alert-success" *ngIf="success">
+    <i class="fas fa-check-circle"></i>
+    {{ success }}
+  </div>
+
+  <div class="alert alert-error" *ngIf="error">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ error }}
+  </div>
+
+  <!-- Indicador de carga -->
+  <div class="loading-overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>{{ isEditing ? 'Guardando cambios...' : 'Creando usuario...' }}</p>
+  </div>
+
+  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="usuario-form" autocomplete="off" novalidate>
+    <!-- Campos honeypot más agresivos para confundir navegadores -->
+    <div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+      <input type="text" name="fake-username" autocomplete="username" tabindex="-1" value="fake-user">
+      <input type="password" name="fake-password" autocomplete="current-password" tabindex="-1" value="fake-pass">
+      <input type="email" name="fake-email" autocomplete="email" tabindex="-1" value="fake@fake.com">
+      <input type="password" name="fake-new-password" autocomplete="new-password" tabindex="-1">
+    </div>
+
+    <div class="form-grid">
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre Completo</label>
+        <input type="text" id="nombre" formControlName="nombre" class="form-control"
+          [class.error]="getFieldError('nombre')" placeholder="Ingresa el nombre completo" autocomplete="off"
+          [name]="'user-fullname-' + randomId">
+        <div class="error-message">{{ getFieldError('nombre') }}</div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" formControlName="correo" class="form-control"
+          [class.error]="getFieldError('correo')" placeholder="usuario@ejemplo.com" autocomplete="new-email"
+          [name]="'user-email-' + randomId" readonly onfocus="this.removeAttribute('readonly');">
+        <div class="error-message">{{ getFieldError('correo') }}</div>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" formControlName="telefono" class="form-control"
+          [class.error]="getFieldError('telefono')" placeholder="1234567890" autocomplete="off"
+          [name]="'user-phone-' + randomId" readonly onfocus="this.removeAttribute('readonly');">
+        <div class="error-message">{{ getFieldError('telefono') }}</div>
+      </div>
+
+      <!-- Rol -->
+      <div class="form-group">
+        <label for="rol">Rol</label>
+        <select id="rol" formControlName="rol" class="form-control" [class.error]="getFieldError('rol')">
+          <option value="">Selecciona un rol</option>
+          <option *ngFor="let rol of roles" [value]="rol.value">{{ rol.label }}</option>
+        </select>
+        <div class="error-message">{{ getFieldError('rol') }}</div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group" *ngIf="!isEditing">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" id="contraseña" formControlName="contraseña" class="form-control"
+          [class.error]="getFieldError('contraseña')" placeholder="Ingresa la contraseña"
+          autocomplete="new-password-create" name="password-creation" spellcheck="false">
+        <div class="error-message">{{ getFieldError('contraseña') }}</div>
+      </div>
+
+      <!-- Confirmar Contraseña -->
+      <div class="form-group" *ngIf="!isEditing">
+        <label for="confirmarContrasena">Confirmar Contraseña</label>
+        <input type="password" id="confirmarContrasena" formControlName="confirmarContrasena" class="form-control"
+          [class.error]="getFieldError('confirmarContrasena')" placeholder="Confirma la contraseña"
+          autocomplete="new-password-confirm" name="password-confirmation" spellcheck="false">
+        <div class="error-message">{{ getFieldError('confirmarContrasena') }}</div>
+      </div>
+    </div>
+
+    <!-- Sección de contraseña para edición -->
+    <div class="password-section" *ngIf="isEditing">
+      <h3>Cambiar Contraseña (Opcional)</h3>
+      <p class="help-text">Deja estos campos vacíos si no deseas cambiar la contraseña</p>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="contraseña">Nueva Contraseña</label>
+          <input type="password" id="contraseña" formControlName="contraseña" class="form-control"
+            [class.error]="getFieldError('contraseña')" placeholder="Nueva contraseña (opcional)"
+            autocomplete="new-password-edit" name="password-edit" spellcheck="false">
+          <div class="error-message">{{ getFieldError('contraseña') }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmarContrasena">Confirmar Nueva Contraseña</label>
+          <input type="password" id="confirmarContrasena" formControlName="confirmarContrasena" class="form-control"
+            [class.error]="getFieldError('confirmarContrasena')" placeholder="Confirma la nueva contraseña"
+            autocomplete="new-password-edit-confirm" name="password-edit-confirm" spellcheck="false">
+          <div class="error-message">{{ getFieldError('confirmarContrasena') }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="loading">
+        <i class="fas fa-times"></i>
+        Cancelar
+      </button>
+
+      <!-- Botón para editar perfil de salud (solo en modo edición) -->
+      <button *ngIf="isEditing" type="button" class="btn btn-info" (click)="editarPerfilSalud()" [disabled]="loading"
+        title="Configurar datos médicos del usuario">
+        <i class="fas fa-heart"></i>
+        Editar Perfil de Salud
+      </button>
+
+      <button type="submit" class="btn btn-primary" [disabled]="usuarioForm.invalid || loading">
+        <i class="fas fa-save"></i>
+        {{ isEditing ? 'Actualizar Usuario' : 'Crear Usuario' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal de countdown para redirección -->
+<div class="modal-overlay" *ngIf="showCountdown" (click)="cancelRedirect()">
+  <div class="modal-content countdown-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>¡Usuario Creado Exitosamente! 🎉</h3>
+    </div>
+
+    <div class="modal-body">
+      <p class="success-message">
+        El usuario ha sido creado correctamente y está listo para usar el sistema.
+      </p>
+
+      <div class="countdown-section">
+        <div class="countdown-circle">
+          <div class="countdown-number">{{ countdownSeconds }}</div>
+        </div>
+        <p class="countdown-text">
+          Dirigiendo a configurar perfil de salud del usuario en <strong>{{ countdownSeconds }}</strong>
+          segundos...
+        </p>
+      </div>
+
+      <div class="redirect-info">
+        <i class="fas fa-heart text-primary"></i>
+        <span>Podrás configurar los datos médicos del usuario para recibir recomendaciones personalizadas</span>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="cancelRedirect()">
+        <i class="fas fa-times"></i>
+        Cancelar y Volver a Lista
+      </button>
+      <button class="btn btn-primary" (click)="redirectToHealthProfile()">
+        <i class="fas fa-heart"></i>
+        Ir Ahora al Perfil de Salud
+      </button>
+    </div>
+  </div>
+</div>

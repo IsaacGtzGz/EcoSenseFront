@@ -1,5 +1,5 @@
 <header class="header">
-  <div class="logo">
+  <div class="logo" [routerLink]="estaLogueado ? '/dashboard' : '/'" [ngClass]="{'clickeable': estaLogueado}">
     <div class="logo-icon">🍃</div>
     <h2>EcoSense</h2>
     <div>
@@ -15,9 +15,32 @@
     <a routerLink="/login">Iniciar sesión</a>
   </nav>
 
+  <!-- Botón de administración solo para administradores -->
+  <div class="admin-controls" *ngIf="estaLogueado && esAdministrador">
+    <button class="btn-admin" routerLink="/admin/usuarios">
+      <i class="fas fa-users-cog"></i>
+      Gestionar Usuarios
+    </button>
+    <button class="btn-admin" routerLink="/admin/dispositivos">
+      <i class="fas fa-satellite-dish"></i>
+      Gestionar Dispositivos
+    </button>
+    <button class="btn-admin" routerLink="/admin/umbrales">
+      <i class="fas fa-sliders-h"></i>
+      Configurar Umbrales
+    </button>
+  </div>
+
   <div class="user-info" *ngIf="estaLogueado">
     <div class="user-avatar">👤</div>
-    <span>{{ nombreUsuario }}</span>
+    <div class="user-details">
+      <span class="user-name">{{ nombreUsuario }}</span>
+      <small class="user-role">{{ rolUsuario }}</small>
+    </div>
+    <button class="btn-admin" routerLink="/perfil-salud" title="Mi Perfil de Salud">
+      <i class="fas fa-heart"></i>
+      Salud
+    </button>
     <button class="btn-logout" (click)="cerrarSesion()">Cerrar sesión</button>
   </div>
 </header>

@@ -63,4 +63,51 @@ export class AuthService {
     const user = localStorage.getItem('usuario');
     return user ? JSON.parse(user) : null;
   }
+
+  // Obtener rol del usuario desde JWT
+  getRole(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || payload.role || null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  // Verificar si el usuario tiene un rol específico
+  hasRole(role: string): boolean {
+    const userRole = this.getRole();
+    return userRole === role;
+  }
+
+  // Verificar si es administrador
+  isAdmin(): boolean {
+    return this.hasRole('Administrador');
+  }
+
+  // Verificar si es usuario estándar
+  isUsuarioEstandar(): boolean {
+    return this.hasRole('Usuario');
+  }
+
+  // Obtener ID del usuario actual
+  getCurrentUserId(): number | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const userId = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] ||
+                     payload.sub ||
+                     payload.userId ||
+                     payload.id;
+      return userId ? parseInt(userId) : null;
+    } catch (error) {
+      console.error('Error al decodificar token para obtener userId:', error);
+      return null;
+    }
+  }
 }

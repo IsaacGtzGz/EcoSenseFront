@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSense - Reportes y Análisis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #2c5f2d;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav a:hover {
+            color: #4caf50;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            color: #2c5f2d;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .filters-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .filters-header {
+            color: #2c5f2d;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            color: #2c5f2d;
+            font-weight: 500;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #4caf50;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .main-chart-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            color: #2c5f2d;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-btn {
+            padding: 8px 16px;
+            border: 2px solid #4caf50;
+            background: transparent;
+            color: #4caf50;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chart-btn.active,
+        .chart-btn:hover {
+            background: #4caf50;
+            color: white;
+        }
+
+        .chart-placeholder {
+            height: 400px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.1rem;
+            border: 2px dashed #ddd;
+        }
+
+        .stats-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .temp-stat {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+        }
+
+        .humidity-stat {
+            background: linear-gradient(135deg, #4ecdc4, #44b3aa);
+        }
+
+        .co2-stat {
+            background: linear-gradient(135deg, #45b7d1, #3a9bc1);
+        }
+
+        .pm25-stat {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .stat-title {
+            color: #2c5f2d;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c5f2d;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .trend-up {
+            color: #4caf50;
+        }
+
+        .trend-down {
+            color: #f44336;
+        }
+
+        .trend-stable {
+            color: #ff9800;
+        }
+
+        .detailed-reports {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 1rem;
+        }
+
+        .daily-icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .weekly-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .monthly-icon {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .alerts-icon {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .report-title {
+            color: #2c5f2d;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .report-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-view {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #45a049;
+        }
+
+        .btn-download {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #0b7dda;
+        }
+
+        .btn-email {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-email:hover {
+            background: #f57c00;
+        }
+
+        .export-panel {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .export-header {
+            color: #2c5f2d;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .export-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .export-btn:hover {
+            border-color: #4caf50;
+            background: #f8fdf8;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: #2c5f2d;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detailed-reports {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-actions {
+                flex-direction: column;
+            }
+
+            .export-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🍃</div>
+            <div>
+                <h2>EcoSense</h2>
+                <small>Monitoreo Inteligente</small>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="05-dashboard.html">Dashboard</a>
+            <a href="06-usuarios.html">Usuarios</a>
+            <a href="07-dispositivos.html">Dispositivos</a>
+            <a href="08-umbrales.html">Umbrales</a>
+            <a href="09-reportes.html">Reportes</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Reportes y Análisis</h1>
+            <p>Genera informes detallados y analiza los datos de monitoreo ambiental</p>
+        </div>
+
+        <!-- Panel de Filtros -->
+        <div class="filters-panel">
+            <h3 class="filters-header">
+                🔍 Filtros de Datos
+            </h3>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="date-from">Fecha Inicio</label>
+                    <input type="date" id="date-from" value="2025-07-16">
+                </div>
+                <div class="filter-group">
+                    <label for="date-to">Fecha Fin</label>
+                    <input type="date" id="date-to" value="2025-07-23">
+                </div>
+                <div class="filter-group">
+                    <label for="sensor-type">Tipo de Sensor</label>
+                    <select id="sensor-type">
+                        <option value="all">Todos los sensores</option>
+                        <option value="temperature">Temperatura</option>
+                        <option value="humidity">Humedad</option>
+                        <option value="co2">CO₂</option>
+                        <option value="pm25">PM2.5</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="device-filter">Dispositivo</label>
+                    <select id="device-filter">
+                        <option value="all">Todos los dispositivos</option>
+                        <option value="ECO-001">ECO-001 (Oficina Principal)</option>
+                        <option value="ECO-002">ECO-002 (Sala de Reuniones)</option>
+                        <option value="ECO-003">ECO-003 (Almacén)</option>
+                        <option value="ECO-004">ECO-004 (Laboratorio)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="time-range">Rango Temporal</label>
+                    <select id="time-range">
+                        <option value="custom">Personalizado</option>
+                        <option value="today">Hoy</option>
+                        <option value="week">Última semana</option>
+                        <option value="month">Último mes</option>
+                        <option value="quarter">Último trimestre</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="aggregation">Agregación</label>
+                    <select id="aggregation">
+                        <option value="hour">Por hora</option>
+                        <option value="day">Por día</option>
+                        <option value="week">Por semana</option>
+                        <option value="month">Por mes</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn-primary" onclick="applyFilters()">Aplicar Filtros</button>
+                <button class="btn-secondary" onclick="resetFilters()">Limpiar Filtros</button>
+                <button class="btn-secondary" onclick="saveFilterPreset()">Guardar Preset</button>
+            </div>
+            <div class="filters-header">Filtros de Reporte</div>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="sensor">Sensor</label>
+                    <select id="sensor">
+                        <option value="co2">CO₂</option>
+                        <option value="pm1">PM1.0</option>
+                        <option value="pm25">PM2.5</option>
+                        <option value="pm10">PM10</option>
+                        <option value="temp">Temperatura</option>
+                        <option value="humidity">Humedad</option>
+                        <option value="pressure">Presión</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="time-range">Rango de tiempo</label>
+                    <select id="time-range">
+                        <option value="1m">1 mes</option>
+                        <option value="6m">6 meses</option>
+                        <option value="all">Completo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn-primary" onclick="applyFilters()">Aplicar Filtros</button>
+                <button class="btn-secondary" onclick="resetFilters()">Resetear</button>
+            </div>
+        </div>
+
+        <!-- Gráfico Principal y Estadísticas -->
+        <div class="reports-grid">
+            <div class="main-chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Tendencias Ambientales</h3>
+                    <div class="chart-controls">
+                        <button class="chart-btn active" onclick="switchChart('line')">Líneas</button>
+                        <button class="chart-btn" onclick="switchChart('bar')">Barras</button>
+                        <button class="chart-btn" onclick="switchChart('area')">Área</button>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    📈 Gráfico interactivo de tendencias<br>
+                    <small>Los datos se cargarán según los filtros aplicados</small>
+                </div>
+            </div>
+
+            <div class="stats-sidebar">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon temp-stat">🌡️</div>
+                        <div class="stat-title">Temperatura Promedio</div>
+                    </div>
+                    <div class="stat-value">22.5°C</div>
+                    <div class="stat-trend trend-up">
+                        ↗️ +0.8°C vs semana anterior
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon humidity-stat">💧</div>
+                        <div class="stat-title">Humedad Promedio</div>
+                    </div>
+                    <div class="stat-value">58%</div>
+                    <div class="stat-trend trend-down">
+                        ↘️ -3% vs semana anterior
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon co2-stat">🌬️</div>
+                        <div class="stat-title">CO₂ Promedio</div>
+                    </div>
+                    <div class="stat-value">420 ppm</div>
+                    <div class="stat-trend trend-stable">
+                        ↔️ Sin cambios significativos
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon pm25-stat">�</div>
+                        <div class="stat-title">PM2.5 Promedio</div>
+                    </div>
+                    <div class="stat-value">28 µg/m³</div>
+                    <div class="stat-trend trend-up">
+                        ↗️ +3 µg/m³ vs semana anterior
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes Detallados -->
+        <div class="detailed-reports">
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon daily-icon">📅</div>
+                    <div class="report-title">Reporte Diario</div>
+                </div>
+                <div class="report-description">
+                    Resumen completo de las lecturas del día con análisis de tendencias, alertas activadas y
+                    recomendaciones de mejora.
+                </div>
+                <div class="report-actions">
+                    <button class="btn-small btn-view" onclick="viewReport('daily')">Ver</button>
+                    <button class="btn-small btn-download" onclick="downloadReport('daily')">Descargar</button>
+                    <button class="btn-small btn-email" onclick="emailReport('daily')">Enviar</button>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon weekly-icon">📊</div>
+                    <div class="report-title">Reporte Semanal</div>
+                </div>
+                <div class="report-description">
+                    Análisis semanal con comparativas, gráficos de tendencias y métricas de cumplimiento de objetivos
+                    ambientales.
+                </div>
+                <div class="report-actions">
+                    <button class="btn-small btn-view" onclick="viewReport('weekly')">Ver</button>
+                    <button class="btn-small btn-download" onclick="downloadReport('weekly')">Descargar</button>
+                    <button class="btn-small btn-email" onclick="emailReport('weekly')">Enviar</button>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon monthly-icon">📈</div>
+                    <div class="report-title">Reporte Mensual</div>
+                </div>
+                <div class="report-description">
+                    Informe ejecutivo mensual con análisis estadístico profundo, patrones identificados y
+                    recomendaciones estratégicas.
+                </div>
+                <div class="report-actions">
+                    <button class="btn-small btn-view" onclick="viewReport('monthly')">Ver</button>
+                    <button class="btn-small btn-download" onclick="downloadReport('monthly')">Descargar</button>
+                    <button class="btn-small btn-email" onclick="emailReport('monthly')">Enviar</button>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <div class="report-icon alerts-icon">🚨</div>
+                    <div class="report-title">Reporte de Alertas</div>
+                </div>
+                <div class="report-description">
+                    Registro detallado de todas las alertas generadas, tiempos de respuesta y análisis de incidencias
+                    críticas.
+                </div>
+                <div class="report-actions">
+                    <button class="btn-small btn-view" onclick="viewReport('alerts')">Ver</button>
+                    <button class="btn-small btn-download" onclick="downloadReport('alerts')">Descargar</button>
+                    <button class="btn-small btn-email" onclick="emailReport('alerts')">Enviar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Exportación -->
+        <div class="export-panel">
+            <h3 class="export-header">
+                📤 Exportar Datos
+            </h3>
+            <div class="export-options">
+                <button class="export-btn" onclick="exportData('excel')">
+                    📊 Excel (.xlsx)
+                </button>
+                <button class="export-btn" onclick="exportData('csv')">
+                    📄 CSV (.csv)
+                </button>
+                <button class="export-btn" onclick="exportData('pdf')">
+                    📑 PDF (.pdf)
+                </button>
+                <button class="export-btn" onclick="exportData('json')">
+                    🔧 JSON (.json)
+                </button>
+            </div>
+            <div class="export-header">Exportar Reporte</div>
+            <div class="export-options">
+                <button class="export-btn" onclick="exportData('csv')">Exportar CSV</button>
+                <button class="export-btn" onclick="exportData('pdf')">Exportar PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 EcoSense. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Variables globales
+        let currentFilters = {};
+        let chartType = 'line';
+
+        // Funciones de filtros
+        function applyFilters() {
+            currentFilters = {
+                dateFrom: document.getElementById('date-from').value,
+                dateTo: document.getElementById('date-to').value,
+                sensorType: document.getElementById('sensor-type').value,
+                device: document.getElementById('device-filter').value,
+                timeRange: document.getElementById('time-range').value,
+                aggregation: document.getElementById('aggregation').value
+            };
+
+            console.log('Filtros aplicados:', currentFilters);
+            alert('Filtros aplicados correctamente. Actualizando datos...');
+
+            // Aquí iría la lógica para actualizar los gráficos y estadísticas
+            updateChartData();
+            updateStatistics();
+        }
+
+        function resetFilters() {
+            document.getElementById('date-from').value = '2025-07-16';
+            document.getElementById('date-to').value = '2025-07-23';
+            document.getElementById('sensor-type').value = 'all';
+            document.getElementById('device-filter').value = 'all';
+            document.getElementById('time-range').value = 'custom';
+            document.getElementById('aggregation').value = 'hour';
+
+            currentFilters = {};
+            alert('Filtros restablecidos');
+        }
+
+        function saveFilterPreset() {
+            const presetName = prompt('Ingrese un nombre para este preset de filtros:');
+            if (presetName) {
+                // Aquí iría la lógica para guardar el preset
+                alert(`Preset "${presetName}" guardado correctamente`);
+            }
+        }
+
+        // Funciones de gráficos
+        function switchChart(type) {
+            // Remover clase active de todos los botones
+            document.querySelectorAll('.chart-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Agregar clase active al botón seleccionado
+            event.target.classList.add('active');
+
+            chartType = type;
+            updateChartData();
+        }
+
+        function updateChartData() {
+            console.log(`Actualizando gráfico tipo: ${chartType} con filtros:`, currentFilters);
+            // Aquí iría la lógica para actualizar el gráfico con los nuevos datos
+        }
+
+        function updateStatistics() {
+            console.log('Actualizando estadísticas con filtros:', currentFilters);
+            // Aquí iría la lógica para actualizar las estadísticas
+        }
+
+        // Funciones de reportes
+        function viewReport(type) {
+            alert(`Abriendo reporte ${type}...`);
+            // Aquí iría la lógica para mostrar el reporte en una nueva ventana o modal
+        }
+
+        function downloadReport(type) {
+            alert(`Descargando reporte ${type}...`);
+            // Aquí iría la lógica para descargar el reporte
+            console.log(`Descargando reporte: ${type}`);
+        }
+
+        function emailReport(type) {
+            const email = prompt('Ingrese el email de destino:');
+            if (email) {
+                alert(`Enviando reporte ${type} a ${email}...`);
+                // Aquí iría la lógica para enviar el reporte por email
+            }
+        }
+
+        // Funciones de exportación
+        function exportData(format) {
+            alert(`Exportando datos en formato ${format.toUpperCase()}...`);
+
+            // Simulación de exportación
+            const filename = `ecosense-data-${new Date().toISOString().split('T')[0]}.${format}`;
+            console.log(`Exportando archivo: ${filename}`);
+
+            // Aquí iría la lógica real de exportación
+            setTimeout(() => {
+                alert(`Archivo ${filename} generado correctamente`);
+            }, 1000);
+        }
+
+        // Funciones de rango temporal
+        document.getElementById('time-range').addEventListener('change', function () {
+            const value = this.value;
+            const today = new Date();
+            const dateFrom = document.getElementById('date-from');
+            const dateTo = document.getElementById('date-to');
+
+            switch (value) {
+                case 'today':
+                    const todayStr = today.toISOString().split('T')[0];
+                    dateFrom.value = todayStr;
+                    dateTo.value = todayStr;
+                    break;
+                case 'week':
+                    const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    dateFrom.value = weekAgo.toISOString().split('T')[0];
+                    dateTo.value = today.toISOString().split('T')[0];
+                    break;
+                case 'month':
+                    const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    dateFrom.value = monthAgo.toISOString().split('T')[0];
+                    dateTo.value = today.toISOString().split('T')[0];
+                    break;
+                case 'quarter':
+                    const quarterAgo = new Date(today.getTime() - 90 * 24 * 60 * 60 * 1000);
+                    dateFrom.value = quarterAgo.toISOString().split('T')[0];
+                    dateTo.value = today.toISOString().split('T')[0];
+                    break;
+            }
+        });
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Página de reportes cargada correctamente');
+
+            // Configurar fechas iniciales
+            const today = new Date();
+            const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+            document.getElementById('date-from').value = weekAgo.toISOString().split('T')[0];
+            document.getElementById('date-to').value = today.toISOString().split('T')[0];
+        });
+    </script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@
   <div class="stats-grid" *ngIf="lectura">
     <!-- CO₂ -->
     <div class="stat-card">
-      <div class="stat-icon co2">🌬️</div>
+      <div class="stat-icon co2"><i class="fas fa-wind"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.co2 }} ppm</h3>
         <p>Dióxido de Carbono (CO₂)</p>
@@ -17,7 +17,7 @@
 
     <!-- PM1.0 -->
     <div class="stat-card">
-      <div class="stat-icon pm">🦠</div>
+      <div class="stat-icon pm"><i class="fas fa-bacterium"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.pm1_0 }} µg/m³</h3>
         <p>Partículas Finas (PM1.0)</p>
@@ -28,7 +28,7 @@
 
     <!-- PM2.5 -->
     <div class="stat-card">
-      <div class="stat-icon pm">💨</div>
+      <div class="stat-icon pm"><i class="fas fa-smog"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.pm2_5 }} µg/m³</h3>
         <p>Partículas Finas (PM2.5)</p>
@@ -39,7 +39,7 @@
 
     <!-- PM10 -->
     <div class="stat-card">
-      <div class="stat-icon pm">🏭</div>
+      <div class="stat-icon pm"><i class="fas fa-industry"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.pm10 }} µg/m³</h3>
         <p>Partículas Gruesas (PM10)</p>
@@ -50,7 +50,7 @@
 
     <!-- Temperatura -->
     <div class="stat-card">
-      <div class="stat-icon temp">🌡️</div>
+      <div class="stat-icon temp"><i class="fas fa-thermometer-half"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.temperatura }} °C</h3>
         <p>Temperatura Ambiental</p>
@@ -61,7 +61,7 @@
 
     <!-- Humedad -->
     <div class="stat-card">
-      <div class="stat-icon humidity">💧</div>
+      <div class="stat-icon humidity"><i class="fas fa-tint"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.humedad }} %</h3>
         <p>Humedad Relativa</p>
@@ -72,7 +72,7 @@
 
     <!-- Presión -->
     <div class="stat-card">
-      <div class="stat-icon pressure">⏲️</div>
+      <div class="stat-icon pressure"><i class="fas fa-weight"></i></div>
       <div class="stat-info">
         <h3>{{ lectura.presion }} hPa</h3>
         <p>Presión Atmosférica</p>
@@ -85,13 +85,13 @@
 
   <div class="main-content">
     <div class="chart-section">
-      <h2>Tendencias (Últimas 24 horas)</h2>
+      <h2><i class="fas fa-chart-line"></i> Tendencias (Últimas 24 horas)</h2>
       <canvas #chartCanvas id="lineChart" width="400" height="200"></canvas>
     </div>
   </div>
 
   <div class="alerts-section">
-    <h2>Alertas Recientes</h2>
+    <h2><i class="fas fa-exclamation-triangle"></i> Alertas Recientes</h2>
 
     <div class="alert-item" *ngFor="let alerta of alertas"
       [ngClass]="'alert-nivel-' + obtenerNivelAlerta(alerta).toLowerCase()">
@@ -105,27 +105,36 @@
       </div>
     </div>
 
-    <div *ngIf="alertas.length === 0">
+    <div *ngIf="alertas.length === 0" class="empty-state">
+      <i class="fas fa-shield-check"></i>
       <p>No hay alertas recientes.</p>
     </div>
   </div>
 
   <div class="devices-section">
-    <h2>Dispositivos Activos</h2>
+    <h2><i class="fas fa-microchip"></i> Dispositivos Activos</h2>
 
     <div class="device-item" *ngFor="let d of dispositivos">
       <div class="device-info">
-        <h4>{{ d.nombre }}</h4>
-        <p>{{ d.ubicacion }} - Último reporte: {{ d.ultimaLectura ? calcularTiempo(d.ultimaLectura.toString()) : 'Sin
-          datos' }}</p>
+        <i class="fas fa-satellite-dish"></i>
+        <div>
+          <h4>{{ d.nombre }}</h4>
+          <p>{{ d.ubicacion }} - MAC: {{ d.mac }}</p>
+          <small>{{ getTiempoUltimaLectura(d) }}</small>
+        </div>
       </div>
       <div class="device-status">
-        <div class="status-dot" [ngClass]="{ 'online': estaEnLinea(d), 'offline': !estaEnLinea(d) }"></div>
-        <span>{{ estaEnLinea(d) ? 'En línea' : 'Sin conexión' }}</span>
+        <div class="status-dot" [ngClass]="{
+          'online': d.estadoConexion === 'online',
+          'offline': d.estadoConexion === 'offline',
+          'unknown': d.estadoConexion === 'unknown'
+        }"></div>
+        <span>{{ getTextoEstadoDispositivo(d) }}</span>
       </div>
     </div>
 
-    <div *ngIf="dispositivos.length === 0">
+    <div *ngIf="dispositivos.length === 0" class="empty-state">
+      <i class="fas fa-satellite-dish"></i>
       <p>No hay dispositivos registrados.</p>
     </div>
   </div>

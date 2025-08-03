@@ -1,0 +1,505 @@
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.form-header h1 {
+  color: #2c5f2d;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Alertas */
+.alert {
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.alert-error {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+/* Overlay de carga */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  z-index: 10;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #4caf50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Formulario */
+.usuario-form {
+  position: relative;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2c5f2d;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-control {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fafafa;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #4caf50;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-control.error {
+  border-color: #dc3545;
+  background: #fff5f5;
+}
+
+.form-control.error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  min-height: 1.2rem;
+  font-weight: 500;
+}
+
+/* Sección de contraseña */
+.password-section {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid #4caf50;
+}
+
+.password-section h3 {
+  color: #2c5f2d;
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.help-text {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 1rem 0;
+  font-style: italic;
+}
+
+/* Botones de acción */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f0f0f0;
+  flex-wrap: wrap; /* Para responsive */
+}
+
+.btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+}
+
+.btn-info {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+}
+
+.btn-info:hover:not(:disabled) {
+  background: linear-gradient(135deg, #138496 0%, #0e6674 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .form-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .form-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Efectos adicionales */
+.form-control::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.form-group:hover .form-control:not(:focus) {
+  border-color: #4caf50;
+  background: white;
+}
+
+/* Animación para los campos */
+.form-group {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+.form-group:nth-child(6) { animation-delay: 0.6s; }
+.form-group:nth-child(7) { animation-delay: 0.7s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos para campos de contraseña personalizados */
+.password-field {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.password-field:focus {
+  font-family: inherit;
+  letter-spacing: normal;
+}
+
+/* Fallback para navegadores que no soportan text-security */
+.password-field:not(:focus) {
+  color: transparent;
+  text-shadow: 0 0 0 #333;
+}
+
+.password-field:not(:focus)::placeholder {
+  color: #999;
+  text-shadow: none;
+}
+
+/* Estilos para el modal de countdown */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.countdown-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideInUp 0.4s ease;
+}
+
+.countdown-modal .modal-header {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 2rem;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.countdown-modal .modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.countdown-modal .modal-body {
+  padding: 2rem;
+  text-align: center;
+}
+
+.success-message {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.countdown-section {
+  margin: 2rem 0;
+}
+
+.countdown-circle {
+  width: 100px;
+  height: 100px;
+  border: 4px solid #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  position: relative;
+  animation: pulse 1s infinite;
+}
+
+.countdown-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.countdown-text {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+.redirect-info {
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.text-primary {
+  color: #28a745 !important;
+}
+
+.countdown-modal .modal-actions {
+  padding: 1.5rem 2rem 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.countdown-modal .btn {
+  flex: 1;
+  max-width: 200px;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .countdown-modal {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .countdown-modal .modal-header {
+    padding: 1.5rem;
+  }
+
+  .countdown-modal .modal-body {
+    padding: 1.5rem;
+  }
+
+  .countdown-modal .modal-actions {
+    flex-direction: column;
+  }
+
+  .countdown-modal .btn {
+    max-width: none;
+  }
+}

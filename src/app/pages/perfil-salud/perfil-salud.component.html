@@ -1,0 +1,228 @@
+<div class="perfil-salud-container">
+  <div class="header-section">
+    <h1>
+      <i class="fas fa-heart"></i>
+      {{ isAdminMode ? 'Configurar Perfil de Salud' : 'Mi Perfil de Salud' }}
+    </h1>
+    <p class="subtitle">
+      {{ isAdminMode && targetUserName
+      ? 'Configure los datos médicos de ' + targetUserName + ' para recibir recomendaciones personalizadas'
+      : 'Configure sus datos médicos para recibir recomendaciones personalizadas' }}
+    </p>
+
+    <!-- Indicador de modo admin -->
+    <div class="admin-mode-indicator" *ngIf="isAdminMode && targetUserName">
+      <i class="fas fa-user-cog"></i>
+      <span>Configurando perfil de: <strong>{{ targetUserName }}</strong></span>
+    </div>
+  </div>
+
+  <!-- Mostrar errores -->
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{ error }}
+  </div>
+
+  <!-- Mostrar éxito -->
+  <div class="alert alert-success" *ngIf="success">
+    <i class="fas fa-check-circle"></i>
+    {{ success }}
+  </div>
+
+  <div class="content-grid">
+    <!-- Panel de información personal -->
+    <div class="info-panel">
+      <h3><i class="fas fa-user"></i> Información Personal</h3>
+
+      <!-- Modo visualización -->
+      <div *ngIf="!editando && datosSalud" class="view-mode">
+        <div class="info-item">
+          <label>Edad:</label>
+          <span>{{ calcularEdad() }} años</span>
+        </div>
+        <div class="info-item">
+          <label>Género:</label>
+          <span>{{ datosSalud.genero }}</span>
+        </div>
+        <div class="info-item">
+          <label>Altura:</label>
+          <span>{{ datosSalud.alturaCm }} cm</span>
+        </div>
+        <div class="info-item">
+          <label>Peso:</label>
+          <span>{{ datosSalud.pesoKg }} kg</span>
+        </div>
+        <div class="info-item">
+          <label>IMC:</label>
+          <span class="imc-valor">{{ calcularIMC() }} - {{ getIMCCategoria() }}</span>
+        </div>
+
+        <button class="btn btn-primary" (click)="editarPerfil()">
+          <i class="fas fa-edit"></i>
+          Editar Perfil
+        </button>
+      </div>
+
+      <!-- Modo edición -->
+      <div *ngIf="editando" class="edit-mode">
+        <div class="form-group">
+          <label><i class="fas fa-calendar"></i> Fecha de Nacimiento</label>
+          <input type="date" class="form-control" [(ngModel)]="formData.fechaNacimiento" required>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-venus-mars"></i> Género</label>
+          <select class="form-control" [(ngModel)]="formData.genero" required>
+            <option value="">-- Seleccione --</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="39 tipos de gay">39 tipos de gay</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-ruler-vertical"></i> Altura (cm)</label>
+            <input type="number" class="form-control" [(ngModel)]="formData.alturaCm" min="100" max="250"
+              placeholder="170" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-weight"></i> Peso (kg)</label>
+            <input type="number" class="form-control" [(ngModel)]="formData.pesoKg" min="30" max="200" placeholder="70"
+              required>
+          </div>
+        </div>
+
+        <div class="imc-preview" *ngIf="calcularIMC() > 0">
+          <p><strong>IMC:</strong> {{ calcularIMC() }} - {{ getIMCCategoria() }}</p>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-success" (click)="guardarDatos()" [disabled]="loading">
+            <i class="fas fa-save"></i>
+            <span *ngIf="!loading">Guardar</span>
+            <span *ngIf="loading">Guardando...</span>
+          </button>
+          <button class="btn btn-secondary" (click)="cancelarEdicion()" *ngIf="datosSalud">
+            <i class="fas fa-times"></i>
+            Cancelar
+          </button>
+        </div>
+      </div>
+
+      <!-- Estado inicial -->
+      <div *ngIf="!editando && !datosSalud && !loading" class="empty-state">
+        <i class="fas fa-user-plus fa-3x"></i>
+        <h3>Configure su perfil</h3>
+        <p>Complete sus datos de salud para recibir recomendaciones personalizadas</p>
+        <button class="btn btn-primary" (click)="editarPerfil()">
+          <i class="fas fa-plus"></i>
+          Crear Perfil
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel de datos médicos -->
+    <div class="medical-panel">
+      <h3><i class="fas fa-stethoscope"></i> Datos Médicos</h3>
+
+      <div *ngIf="editando" class="edit-mode">
+        <div class="form-group">
+          <label><i class="fas fa-lungs"></i> Enfermedades Respiratorias</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item" *ngFor="let opcion of enfermedadesOptions">
+              <input type="checkbox" [id]="'enfermedad_' + opcion.id" [checked]="opcion.checked"
+                (change)="onEnfermedadChange(opcion.id, $any($event.target).checked)">
+              <label [for]="'enfermedad_' + opcion.id">{{ opcion.label }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-allergies"></i> Alergias</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item" *ngFor="let opcion of alergiasOptions">
+              <input type="checkbox" [id]="'alergia_' + opcion.id" [checked]="opcion.checked"
+                (change)="onAlergiaChange(opcion.id, $any($event.target).checked)">
+              <label [for]="'alergia_' + opcion.id">{{ opcion.label }}</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fas fa-notes-medical"></i> Observaciones Adicionales</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item" *ngFor="let opcion of observacionesOptions">
+              <input type="checkbox" [id]="'observacion_' + opcion.id" [checked]="opcion.checked"
+                (change)="onObservacionChange(opcion.id, $any($event.target).checked)">
+              <label [for]="'observacion_' + opcion.id">{{ opcion.label }}</label>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top: 15px;">
+            <label><i class="fas fa-edit"></i> Observaciones Personalizadas</label>
+            <textarea class="form-control" [(ngModel)]="formData.observacionesPersonalizadas" rows="2"
+              placeholder="Otras observaciones médicas no listadas arriba..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!editando && datosSalud" class="view-mode">
+        <div class="medical-item" *ngIf="datosSalud.enfermedadesRespiratorias">
+          <label><i class="fas fa-lungs"></i> Enfermedades Respiratorias:</label>
+          <p>{{ datosSalud.enfermedadesRespiratorias }}</p>
+        </div>
+        <div class="medical-item" *ngIf="datosSalud.alergias">
+          <label><i class="fas fa-allergies"></i> Alergias:</label>
+          <p>{{ datosSalud.alergias }}</p>
+        </div>
+        <div class="medical-item" *ngIf="datosSalud.observaciones">
+          <label><i class="fas fa-notes-medical"></i> Observaciones Adicionales:</label>
+          <p>{{ datosSalud.observaciones }}</p>
+        </div>
+        <div class="medical-item" *ngIf="datosSalud.observacionesPersonalizadas">
+          <label><i class="fas fa-edit"></i> Observaciones Personalizadas:</label>
+          <p>{{ datosSalud.observacionesPersonalizadas }}</p>
+        </div>
+
+        <div
+          *ngIf="!datosSalud.enfermedadesRespiratorias && !datosSalud.alergias && !datosSalud.observaciones && !datosSalud.observacionesPersonalizadas">
+          <p class="no-data">No hay datos médicos registrados</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de recomendaciones -->
+    <div class="recommendations-panel">
+      <h3><i class="fas fa-lightbulb"></i> Recomendaciones Personalizadas</h3>
+
+      <div *ngIf="recomendaciones.length > 0" class="recommendations-list">
+        <div class="recommendation-item" *ngFor="let recomendacion of recomendaciones">
+          <i class="fas fa-check-circle"></i>
+          <span>{{ recomendacion }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="recomendaciones.length === 0 && !loading" class="no-recommendations">
+        <i class="fas fa-info-circle"></i>
+        <p>Complete su perfil de salud para recibir recomendaciones personalizadas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <div class="loading-state" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin fa-2x"></i>
+    <p>Cargando datos de salud...</p>
+  </div>
+
+  <!-- Botón volver -->
+  <div class="back-button">
+    <button class="btn btn-secondary" [routerLink]="isAdminMode ? '/admin/usuarios' : '/dashboard'"
+      [disabled]="isAdminMode && !perfilGuardado" [class.disabled]="isAdminMode && !perfilGuardado"
+      [title]="isAdminMode && !perfilGuardado ? 'Complete y guarde el perfil de salud antes de continuar' : ''">
+      <i class="fas fa-arrow-left"></i>
+      {{ isAdminMode ? 'Volver a Gestión de Usuarios' : 'Volver al Dashboard' }}
+    </button>
+  </div>
+</div>
