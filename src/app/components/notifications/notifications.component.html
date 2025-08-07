@@ -1,0 +1,30 @@
+<!-- Contenedor de notificaciones -->
+<div class="notifications-container">
+    <!-- Iterar sobre todas las notificaciones -->
+    <div *ngFor="let notification of notifications" class="notification-card"
+        [ngClass]="'notification-' + notification.type">
+
+        <!-- Header de la notificación -->
+        <div class="notification-header">
+            <div class="notification-icon">
+                <i class="fas" [ngClass]="getIconClass(notification.type)"></i>
+            </div>
+            <div class="notification-content">
+                <h4 class="notification-title">{{ notification.title }}</h4>
+                <p class="notification-message">{{ notification.message }}</p>
+            </div>
+            <button class="notification-close" (click)="removeNotification(notification.id)"
+                *ngIf="!notification.actions">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Botones de acción (si existen) -->
+        <div class="notification-actions" *ngIf="notification.actions && notification.actions.length > 0">
+            <button *ngFor="let action of notification.actions" class="btn"
+                [ngClass]="'btn-' + (action.style || 'primary')" (click)="executeAction(action)">
+                {{ action.label }}
+            </button>
+        </div>
+    </div>
+</div>

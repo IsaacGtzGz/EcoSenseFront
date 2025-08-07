@@ -399,3 +399,90 @@
     padding: 1.5rem;
   }
 }
+
+/* Estilos para mensajes de error */
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #c33;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message i {
+  color: #e74c3c;
+}
+
+/* Estilos para advertencia de forzar eliminación */
+.force-warning {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.force-warning-content {
+  text-align: left;
+}
+
+.force-warning-content i {
+  color: #ff6b35;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.force-warning-content strong {
+  color: #d63384;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.force-warning-content p {
+  margin: 0.5rem 0;
+  color: #856404;
+}
+
+.force-warning-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  color: #856404;
+}
+
+.force-warning-content li {
+  margin: 0.3rem 0;
+}
+
+/* Botón de eliminación forzada */
+.btn-danger-force {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+  animation: pulse-danger 2s infinite;
+}
+
+.btn-danger-force:hover {
+  background: linear-gradient(135deg, #c82333 0%, #a71e2a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+@keyframes pulse-danger {
+  0% { box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); }
+  50% { box-shadow: 0 4px 25px rgba(220, 53, 69, 0.5); }
+  100% { box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3); }
+}

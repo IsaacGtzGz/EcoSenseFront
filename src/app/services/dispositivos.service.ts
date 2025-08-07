@@ -30,6 +30,11 @@ export class DispositivosService {
     return this.http.get<Dispositivo[]>(this.apiUrl);
   }
 
+  // Alias para compatibilidad con otros componentes
+  obtenerDispositivos(): Observable<Dispositivo[]> {
+    return this.getDispositivos();
+  }
+
   // Obtener dispositivo por ID
   getDispositivo(id: number): Observable<Dispositivo> {
     return this.http.get<Dispositivo>(`${this.apiUrl}/${id}`);
@@ -46,7 +51,8 @@ export class DispositivosService {
   }
 
   // Eliminar dispositivo
-  deleteDispositivo(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deleteDispositivo(id: number, force: boolean = false): Observable<any> {
+    const url = force ? `${this.apiUrl}/${id}?force=true` : `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
   }
 }

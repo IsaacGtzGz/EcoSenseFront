@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // ← ¡IMPORTANTE!
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -19,6 +20,8 @@ import { RouterModule } from '@angular/router';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UmbralesConfigComponent } from './pages/admin/umbrales-config/umbrales-config.component';
 import { PerfilSaludComponent } from './pages/perfil-salud/perfil-salud.component';
+import { ReportesComponent } from './pages/reportes/reportes.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -32,10 +35,13 @@ import { PerfilSaludComponent } from './pages/perfil-salud/perfil-salud.componen
     HeaderComponent,
     FooterComponent,
     UmbralesConfigComponent,
-    PerfilSaludComponent
+    PerfilSaludComponent,
+    ReportesComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

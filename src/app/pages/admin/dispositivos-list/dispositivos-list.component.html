@@ -108,6 +108,27 @@
                 <i class="fas fa-info-circle"></i>
                 Esta acción eliminará todos los datos asociados al dispositivo.
             </p>
+
+            <!-- Mostrar error si existe -->
+            <div class="error-message" *ngIf="error">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+
+            <!-- Mostrar advertencia adicional si hay que forzar -->
+            <div class="force-warning" *ngIf="showForceConfirm">
+                <div class="force-warning-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>⚠️ ADVERTENCIA ⚠️</strong>
+                    <p>Este dispositivo tiene datos históricos. Eliminar forzadamente borrará:</p>
+                    <ul>
+                        <li>• Todas las lecturas históricas</li>
+                        <li>• Todas las alertas generadas</li>
+                        <li>• Configuraciones de umbrales</li>
+                    </ul>
+                    <p><strong>Esta acción NO SE PUEDE DESHACER</strong></p>
+                </div>
+            </div>
         </div>
 
         <div class="modal-actions">
@@ -115,9 +136,13 @@
                 <i class="fas fa-times"></i>
                 Cancelar
             </button>
-            <button class="btn btn-danger" (click)="confirmDelete()">
+            <button class="btn btn-danger" (click)="confirmDelete()" *ngIf="!showForceConfirm">
                 <i class="fas fa-trash-alt"></i>
                 Eliminar Dispositivo
+            </button>
+            <button class="btn btn-danger-force" (click)="forceDelete()" *ngIf="showForceConfirm">
+                <i class="fas fa-exclamation-triangle"></i>
+                Forzar Eliminación
             </button>
         </div>
     </div>

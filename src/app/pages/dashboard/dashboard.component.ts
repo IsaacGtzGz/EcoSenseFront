@@ -366,19 +366,14 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
         error: (err) => {
           // En lugar de solo mostrar error, simular algunos dispositivos como "online" si no hay datos
           if (err.status === 404) {
-            console.warn(`No hay lecturas para dispositivo ${dispositivo.nombre} - Simulando estado`);
-            // Simular dispositivos online de manera aleatoria para demo
-            const esOnlineDemo = Math.random() > 0.5;
-            if (esOnlineDemo) {
-              dispositivo.ultimaLectura = new Date(Date.now() - Math.random() * 300000); // Últimos 5 min random
-              dispositivo.estadoConexion = 'online';
-            } else {
-              dispositivo.ultimaLectura = new Date(Date.now() - Math.random() * 1800000); // Últimos 30 min random
-              dispositivo.estadoConexion = 'offline';
-            }
-          } else {
+            console.info(`No hay lecturas para dispositivo ${dispositivo.nombre} - Simulando estado offline`);
+            // Marcar como offline cuando no hay lecturas
+            dispositivo.estadoConexion = 'offline';
             dispositivo.ultimaLectura = undefined;
+          } else {
+            console.error(`Error al obtener lecturas para ${dispositivo.nombre}:`, err);
             dispositivo.estadoConexion = 'unknown';
+            dispositivo.ultimaLectura = undefined;
           }
         }
       });

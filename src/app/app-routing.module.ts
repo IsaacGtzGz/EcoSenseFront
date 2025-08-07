@@ -8,6 +8,7 @@ import { DispositivosListComponent } from './pages/admin/dispositivos-list/dispo
 import { DispositivoFormComponent } from './pages/admin/dispositivo-form/dispositivo-form.component';
 import { UmbralesConfigComponent } from './pages/admin/umbrales-config/umbrales-config.component';
 import { PerfilSaludComponent } from './pages/perfil-salud/perfil-salud.component';
+import { ReportesComponent } from './pages/reportes/reportes.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 
@@ -15,6 +16,13 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+
+  // Reportes (accesible para usuarios autenticados)
+  {
+    path: 'reportes',
+    component: ReportesComponent,
+    canActivate: [AuthGuard]
+  },
 
   // Rutas de administración (solo para administradores)
   {
