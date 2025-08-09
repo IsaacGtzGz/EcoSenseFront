@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 export interface ReporteRequest {
   idUsuario: number;
-  fechaInicio: string;
-  fechaFin: string;
+  fechaInicio: string; // El backend convertirá automáticamente
+  fechaFin: string;    // El backend convertirá automáticamente
   idDispositivo?: number;
   tipoSensor?: string;
 }
@@ -55,7 +55,7 @@ export class ReportesService {
       .set('fechaInicio', fechaInicio)
       .set('fechaFin', fechaFin);
 
-    if (idDispositivo) {
+    if (idDispositivo !== undefined) {
       params = params.set('idDispositivo', idDispositivo.toString());
     }
 

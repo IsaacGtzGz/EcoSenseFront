@@ -1,0 +1,66 @@
+/* Estilos visuales para la página de contacto */
+.contacto-page {
+	width: 100%;
+	margin: 0;
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: 0 4px 24px rgba(44,95,45,0.08);
+	padding: 0;
+}
+.contacto-page h1 {
+	color: #2c5f2d;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+.contacto-form {
+	max-width: 500px;
+	margin: 2rem auto;
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+}
+.contacto-form input,
+.form-group-modern {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1.2rem;
+}
+.form-group-modern label {
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+	color: #2c5f2d;
+}
+.form-input-modern {
+	border: 1px solid #b2d8b2;
+	border-radius: 6px;
+	padding: 0.7rem;
+	font-size: 1rem;
+	margin-bottom: 0.2rem;
+}
+.form-input-modern:focus {
+	outline: none;
+	border-color: #27ae60;
+}
+.btn-form-modern {
+	background: #27ae60;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	padding: 0.7rem 2rem;
+	cursor: pointer;
+	font-weight: 600;
+	margin-top: 1rem;
+	transition: background 0.2s;
+}
+.btn-form-modern:disabled {
+	background: #b2d8b2;
+	cursor: not-allowed;
+}
+.contacto-info {
+	margin-top: 2rem;
+	background: #f4f8f4;
+	border-radius: 10px;
+	padding: 1.2rem;
+	color: #2c5f2d;
+	box-shadow: 0 2px 8px rgba(44,95,45,0.04);
+}

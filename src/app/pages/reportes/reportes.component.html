@@ -1,164 +1,164 @@
 <div class="reportes-container">
-    <div class="header-section">
-        <h2>📊 Sistema de Reportes</h2>
-        <p>Genera reportes detallados de las lecturas ambientales</p>
+  <div class="header-section">
+    <h2>📊 Sistema de Reportes</h2>
+    <p>Genera reportes detallados de las lecturas ambientales</p>
+  </div>
+
+  <!-- Formulario de Filtros -->
+  <div class="filtros-card">
+    <h3>🔍 Filtros de Reporte</h3>
+    <form [formGroup]="reporteForm" class="filtros-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fechaInicio">📅 Fecha Inicio:</label>
+          <input type="date" id="fechaInicio" formControlName="fechaInicio" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaFin">📅 Fecha Fin:</label>
+          <input type="date" id="fechaFin" formControlName="fechaFin" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dispositivo">📡 Dispositivo (Opcional):</label>
+          <select id="dispositivo" formControlName="idDispositivo" class="form-control">
+            <option value="">Todos los dispositivos</option>
+            <option *ngFor="let dispositivo of dispositivos" [value]="dispositivo.idDispositivo">
+              {{dispositivo.nombre}} - {{dispositivo.ubicacion}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="sensor">🌡️ Tipo de Sensor (Opcional):</label>
+          <select id="sensor" formControlName="tipoSensor" class="form-control">
+            <option value="">Todos los sensores</option>
+            <option *ngFor="let tipo of tiposSensor" [value]="tipo.value">
+              {{tipo.label}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="obtenerVistaPrevia()"
+          [disabled]="!reporteForm.valid || cargandoDatos">
+          <span *ngIf="cargandoDatos">⏳ Cargando...</span>
+          <span *ngIf="!cargandoDatos">👁️ Vista Previa</span>
+        </button>
+
+        <button type="button" class="btn btn-success" (click)="generarReporte('csv')"
+          [disabled]="!reporteForm.valid || generandoReporte">
+          <span *ngIf="generandoReporte">⏳ Generando...</span>
+          <span *ngIf="!generandoReporte">📄 Generar CSV</span>
+        </button>
+
+        <button type="button" class="btn btn-danger" (click)="generarReporte('pdf')"
+          [disabled]="!reporteForm.valid || generandoReporte">
+          <span *ngIf="generandoReporte">⏳ Generando...</span>
+          <span *ngIf="!generandoReporte">📋 Generar PDF</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Vista Previa de Datos -->
+  <div class="vista-previa-card" *ngIf="datosReporte">
+    <div class="card-header">
+      <h3>👁️ Vista Previa del Reporte</h3>
+      <button class="btn btn-outline" (click)="toggleVistaPrevia()">
+        <span *ngIf="!mostrarVistaPevia">👁️ Mostrar</span>
+        <span *ngIf="mostrarVistaPevia">🙈 Ocultar</span>
+      </button>
     </div>
 
-    <!-- Formulario de Filtros -->
-    <div class="filtros-card">
-        <h3>🔍 Filtros de Reporte</h3>
-        <form [formGroup]="reporteForm" class="filtros-form">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="fechaInicio">📅 Fecha Inicio:</label>
-                    <input type="date" id="fechaInicio" formControlName="fechaInicio" class="form-control" required>
-                </div>
+    <div class="card-content" *ngIf="mostrarVistaPevia">
+      <div class="resumen-datos">
+        <div class="stat-item">
+          <span class="label">📊 Total de Registros:</span>
+          <span class="value">{{datosReporte.totalRegistros}}</span>
+        </div>
+        <div class="stat-item">
+          <span class="label">📅 Rango de Fechas:</span>
+          <span class="value">
+            {{formatearFecha(datosReporte.rangoFechas.inicio)}} -
+            {{formatearFecha(datosReporte.rangoFechas.fin)}}
+          </span>
+        </div>
+      </div>
 
-                <div class="form-group">
-                    <label for="fechaFin">📅 Fecha Fin:</label>
-                    <input type="date" id="fechaFin" formControlName="fechaFin" class="form-control" required>
-                </div>
-            </div>
+      <div class="tabla-datos" *ngIf="datosReporte.datos.length > 0">
+        <h4>🔬 Muestra de Datos (Primeros 10 registros)</h4>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>📅 Fecha</th>
+              <th>📡 Dispositivo</th>
+              <th>🌡️ Sensor</th>
+              <th>📊 Valor</th>
+              <th>📏 Unidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dato of datosReporte.datos.slice(0, 10)">
+              <td>{{formatearFecha(dato.timestamp)}}</td>
+              <td>Dispositivo {{dato.idDispositivo}}</td>
+              <td>Múltiples</td>
+              <td>{{formatearValorCompleto(dato)}}</td>
+              <td>Varios</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="table-note" *ngIf="datosReporte.datos.length > 10">
+          ... y {{datosReporte.datos.length - 10}} registros más
+        </p>
+      </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="dispositivo">📡 Dispositivo (Opcional):</label>
-                    <select id="dispositivo" formControlName="idDispositivo" class="form-control">
-                        <option value="">Todos los dispositivos</option>
-                        <option *ngFor="let dispositivo of dispositivos" [value]="dispositivo.id">
-                            {{dispositivo.nombre}} - {{dispositivo.ubicacion}}
-                        </option>
-                    </select>
-                </div>
+      <div class="no-datos" *ngIf="datosReporte.datos.length === 0">
+        <p>⚠️ No se encontraron datos para los filtros seleccionados.</p>
+      </div>
+    </div>
+  </div>
 
-                <div class="form-group">
-                    <label for="sensor">🌡️ Tipo de Sensor (Opcional):</label>
-                    <select id="sensor" formControlName="tipoSensor" class="form-control">
-                        <option value="">Todos los sensores</option>
-                        <option *ngFor="let tipo of tiposSensor" [value]="tipo.value">
-                            {{tipo.label}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" (click)="obtenerVistaPrevia()"
-                    [disabled]="!reporteForm.valid || cargandoDatos">
-                    <span *ngIf="cargandoDatos">⏳ Cargando...</span>
-                    <span *ngIf="!cargandoDatos">👁️ Vista Previa</span>
-                </button>
-
-                <button type="button" class="btn btn-success" (click)="generarReporte('csv')"
-                    [disabled]="!reporteForm.valid || generandoReporte">
-                    <span *ngIf="generandoReporte">⏳ Generando...</span>
-                    <span *ngIf="!generandoReporte">📄 Generar CSV</span>
-                </button>
-
-                <button type="button" class="btn btn-danger" (click)="generarReporte('pdf')"
-                    [disabled]="!reporteForm.valid || generandoReporte">
-                    <span *ngIf="generandoReporte">⏳ Generando...</span>
-                    <span *ngIf="!generandoReporte">📋 Generar PDF</span>
-                </button>
-            </div>
-        </form>
+  <!-- Historial de Reportes -->
+  <div class="historial-card">
+    <div class="card-header">
+      <h3>📂 Historial de Reportes</h3>
+      <button class="btn btn-outline" (click)="toggleHistorial()">
+        <span *ngIf="!mostrarHistorial">📂 Mostrar Historial</span>
+        <span *ngIf="mostrarHistorial">📁 Ocultar Historial</span>
+      </button>
     </div>
 
-    <!-- Vista Previa de Datos -->
-    <div class="vista-previa-card" *ngIf="datosReporte">
-        <div class="card-header">
-            <h3>👁️ Vista Previa del Reporte</h3>
-            <button class="btn btn-outline" (click)="toggleVistaPrevia()">
-                <span *ngIf="!mostrarVistaPevia">👁️ Mostrar</span>
-                <span *ngIf="mostrarVistaPevia">🙈 Ocultar</span>
+    <div class="card-content" *ngIf="mostrarHistorial">
+      <div class="historial-lista" *ngIf="historialReportes.length > 0">
+        <div class="reporte-item" *ngFor="let reporte of historialReportes">
+          <div class="reporte-info">
+            <div class="reporte-tipo">
+              <span class="badge" [class]="'badge-' + reporte.tipoReporte.toLowerCase()">
+                {{reporte.tipoReporte.toUpperCase()}}
+              </span>
+            </div>
+            <div class="reporte-detalles">
+              <p><strong>📅 Rango:</strong>
+                {{formatearFecha(reporte.rangoInicio)}} - {{formatearFecha(reporte.rangoFin)}}
+              </p>
+              <p><strong>⏰ Generado:</strong> {{formatearFecha(reporte.fechaExportacion)}}</p>
+            </div>
+          </div>
+          <div class="reporte-acciones">
+            <button class="btn btn-sm btn-primary" (click)="descargarReporte(reporte)">
+              💾 Descargar
             </button>
+          </div>
         </div>
+      </div>
 
-        <div class="card-content" *ngIf="mostrarVistaPevia">
-            <div class="resumen-datos">
-                <div class="stat-item">
-                    <span class="label">📊 Total de Registros:</span>
-                    <span class="value">{{datosReporte.totalRegistros}}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="label">📅 Rango de Fechas:</span>
-                    <span class="value">
-                        {{formatearFecha(datosReporte.rangoFechas.inicio)}} -
-                        {{formatearFecha(datosReporte.rangoFechas.fin)}}
-                    </span>
-                </div>
-            </div>
-
-            <div class="tabla-datos" *ngIf="datosReporte.datos.length > 0">
-                <h4>🔬 Muestra de Datos (Primeros 10 registros)</h4>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>📅 Fecha</th>
-                            <th>📡 Dispositivo</th>
-                            <th>🌡️ Sensor</th>
-                            <th>📊 Valor</th>
-                            <th>📏 Unidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let dato of datosReporte.datos.slice(0, 10)">
-                            <td>{{formatearFecha(dato.fecha)}}</td>
-                            <td>{{dato.dispositivo}}</td>
-                            <td>{{dato.tipoSensor}}</td>
-                            <td>{{formatearValor(dato.valor)}}</td>
-                            <td>{{dato.unidad}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p class="table-note" *ngIf="datosReporte.datos.length > 10">
-                    ... y {{datosReporte.datos.length - 10}} registros más
-                </p>
-            </div>
-
-            <div class="no-datos" *ngIf="datosReporte.datos.length === 0">
-                <p>⚠️ No se encontraron datos para los filtros seleccionados.</p>
-            </div>
-        </div>
+      <div class="no-historial" *ngIf="historialReportes.length === 0">
+        <p>📝 No tienes reportes generados aún.</p>
+      </div>
     </div>
-
-    <!-- Historial de Reportes -->
-    <div class="historial-card">
-        <div class="card-header">
-            <h3>📂 Historial de Reportes</h3>
-            <button class="btn btn-outline" (click)="toggleHistorial()">
-                <span *ngIf="!mostrarHistorial">📂 Mostrar Historial</span>
-                <span *ngIf="mostrarHistorial">📁 Ocultar Historial</span>
-            </button>
-        </div>
-
-        <div class="card-content" *ngIf="mostrarHistorial">
-            <div class="historial-lista" *ngIf="historialReportes.length > 0">
-                <div class="reporte-item" *ngFor="let reporte of historialReportes">
-                    <div class="reporte-info">
-                        <div class="reporte-tipo">
-                            <span class="badge" [class]="'badge-' + reporte.tipoReporte.toLowerCase()">
-                                {{reporte.tipoReporte.toUpperCase()}}
-                            </span>
-                        </div>
-                        <div class="reporte-detalles">
-                            <p><strong>📅 Rango:</strong>
-                                {{formatearFecha(reporte.rangoInicio)}} - {{formatearFecha(reporte.rangoFin)}}
-                            </p>
-                            <p><strong>⏰ Generado:</strong> {{formatearFecha(reporte.fechaExportacion)}}</p>
-                        </div>
-                    </div>
-                    <div class="reporte-acciones">
-                        <button class="btn btn-sm btn-primary" (click)="descargarReporte(reporte)">
-                            💾 Descargar
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="no-historial" *ngIf="historialReportes.length === 0">
-                <p>📝 No tienes reportes generados aún.</p>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>

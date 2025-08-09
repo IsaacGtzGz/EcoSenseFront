@@ -1,0 +1,256 @@
+<!-- Landing Page EcoSense - Versión Profesional -->
+<div class="landing-page">
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <i class="fas fa-leaf"></i> Monitoreo Ambiental <br>
+          <span class="highlight">Inteligente</span>
+        </h1>
+        <p class="hero-description">
+          Sistema profesional de monitoreo de calidad del aire y condiciones ambientales.
+          Controla CO₂, partículas PM, temperatura, humedad y presión atmosférica en tiempo real.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item" *ngFor="let stat of stats">
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-primary" (click)="goToLogin()">
+            <i class="fas fa-rocket"></i> Comenzar Ahora
+          </button>
+          <button class="btn-secondary" (click)="scrollToSection('caracteristicas')">
+            <i class="fas fa-list-alt"></i> Ver Características
+          </button>
+          <a class="btn-secondary" style="margin-left: 1rem;" routerLink="/faq">
+            <i class="fas fa-question-circle"></i> FAQ / Comentarios
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="dashboard-preview">
+          <div class="preview-header">
+            <div class="preview-dot"></div>
+            <div class="preview-dot"></div>
+            <div class="preview-dot"></div>
+          </div>
+          <div class="preview-content">
+            <div class="metric-card">
+              <div class="metric-icon"><i class="fas fa-wind"></i></div>
+              <div class="metric-label">CO₂</div>
+              <div class="metric-value">420 ppm</div>
+              <div class="metric-status good">Normal</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon"><i class="fas fa-thermometer-half"></i></div>
+              <div class="metric-label">Temperatura</div>
+              <div class="metric-value">23.5°C</div>
+              <div class="metric-status good">Óptima</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon"><i class="fas fa-tint"></i></div>
+              <div class="metric-label">Humedad</div>
+              <div class="metric-value">65%</div>
+              <div class="metric-status good">Confortable</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="caracteristicas" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-list-alt"></i> Características principales</h2>
+        <p class="section-description">Descubre todo lo que EcoSense puede hacer por ti:</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-wind"></i></div>
+          <h3>Monitoreo de CO₂</h3>
+          <p>Controla la concentración de dióxido de carbono en tiempo real.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-burn"></i></div>
+          <h3>Monitoreo de partículas PM1.0, PM2.5 y PM10</h3>
+          <p>Detecta partículas contaminantes para ambientes más saludables.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-thermometer-half"></i></div>
+          <h3>Temperatura</h3>
+          <p>Visualiza la temperatura ambiental y optimiza tu entorno.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-tint"></i></div>
+          <h3>Humedad</h3>
+          <p>Monitorea la humedad relativa para mayor confort.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-bell"></i></div>
+          <h3>Alertas inteligentes</h3>
+          <p>Recibe notificaciones automáticas y personalizadas ante eventos críticos.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+          <h3>Dashboard en tiempo real</h3>
+          <p>Visualiza todos los datos en un panel interactivo y moderno.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-file-export"></i></div>
+          <h3>Reportes exportables</h3>
+          <p>Descarga tus datos en PDF y CSV para análisis profesional.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-headset"></i></div>
+          <h3>Soporte 24/7</h3>
+          <p>Asistencia técnica y acompañamiento en todo momento.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>Acceso multiplataforma</h3>
+          <p>Disponible en web, móvil y dashboard para tu comodidad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <div class="benefits-content">
+        <div class="benefits-text">
+          <h2 class="benefits-title"><i class="fas fa-trophy"></i> ¿Por qué elegir EcoSense?</h2>
+          <div class="benefit-list">
+            <div class="benefit-item">
+              <div class="benefit-icon"><i class="fas fa-check-circle"></i></div>
+              <div>
+                <strong>Instalación rápida:</strong> Configuración en menos de 5 minutos
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon"><i class="fas fa-check-circle"></i></div>
+              <div>
+                <strong>Datos precisos:</strong> Sensores de alta calidad con certificación
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon"><i class="fas fa-check-circle"></i></div>
+              <div>
+                <strong>Alertas inteligentes:</strong> Notificaciones proactivas personalizables
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon"><i class="fas fa-check-circle"></i></div>
+              <div>
+                <strong>Reportes profesionales:</strong> Exporta datos en PDF y CSV
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon"><i class="fas fa-check-circle"></i></div>
+              <div>
+                <strong>Soporte 24/7:</strong> Asistencia técnica cuando la necesites
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="benefits-visual">
+          <div class="devices-showcase">
+            <div class="device-item">
+              <div class="device-icon"><i class="fas fa-mobile-alt"></i></div>
+              <span>Móvil</span>
+            </div>
+            <div class="device-item">
+              <div class="device-icon"><i class="fas fa-laptop"></i></div>
+              <span>Web</span>
+            </div>
+            <div class="device-item">
+              <div class="device-icon"><i class="fas fa-chart-bar"></i></div>
+              <span>Dashboard</span>
+            </div>
+            <div class="device-item">
+              <div class="device-icon"><i class="fas fa-chart-line"></i></div>
+              <span>Reportes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title"><i class="fas fa-rocket"></i> Comienza tu monitoreo ambiental hoy</h2>
+        <p class="cta-description">
+          Únete a empresas que ya confían en EcoSense para el monitoreo de sus espacios
+        </p>
+        <div class="cta-actions">
+          <button class="btn-cta-primary" (click)="goToLogin()">
+            <i class="fas fa-bullseye"></i> Acceder al Sistema
+          </button>
+          <button class="btn-cta-secondary" (click)="goToRegister()">
+            <i class="fas fa-edit"></i> Solicitar Demo
+          </button>
+        </div>
+        <p class="cta-note">
+          <i class="fas fa-lightbulb"></i> <strong>¿Nuevo usuario?</strong> Contacta con nuestro equipo para configurar
+          tu cuenta
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section (antes de contacto) -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <app-faq-publico></app-faq-publico>
+    </div>
+  </section>
+
+  <!-- Contacto solo como botón/enlace -->
+  <section id="contacto" class="contact-section">
+    <div class="container">
+      <div class="contact-content">
+        <div class="contact-info">
+          <h2 class="contact-title"><i class="fas fa-phone"></i> Información de Contacto</h2>
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <strong>Email:</strong>
+                <a href="mailto:{{ contactInfo.email }}">{{ contactInfo.email }}</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-mobile-alt"></i></div>
+              <div>
+                <strong>Teléfono:</strong>
+                <a href="tel:{{ contactInfo.phone }}">{{ contactInfo.phone }}</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <strong>Ubicación:</strong>
+                <span>{{ contactInfo.address }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <a class="btn-form-modern" routerLink="/contacto">
+            <i class="fas fa-comments"></i> Ir a la página de contacto
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

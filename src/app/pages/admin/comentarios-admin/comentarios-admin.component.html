@@ -1,0 +1,41 @@
+<div class="admin-comentarios">
+  <h2>Comentarios y Preguntas de Usuarios</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Autor</th>
+        <th>Comentario/Pregunta</th>
+        <th>Respuesta</th>
+        <th>Destacado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of comentarios">
+        <td>{{ c.fecha | date:'short' }}</td>
+        <td>{{ c.autor }}</td>
+        <td>{{ c.pregunta }}</td>
+        <td>
+          <span *ngIf="c.respuesta">{{ c.respuesta }}</span>
+          <span *ngIf="!c.respuesta">(Pendiente)</span>
+          <div *ngIf="!c.respuesta">
+            <input [(ngModel)]="respuesta[c.id || 0]" placeholder="Responder..." />
+            <button (click)="responderComentario(c.id)">Responder</button>
+          </div>
+        </td>
+        <td>
+          <button (click)="destacarComentario(c.id, !c.destacado)">
+            <span *ngIf="c.destacado">⭐</span>
+            <span *ngIf="!c.destacado">-</span>
+          </button>
+        </td>
+        <td>
+          <button class="btn-accion eliminar" (click)="eliminarComentario(c.id)">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,27 @@
+<div class="faq-publico">
+  <h2>Preguntas Frecuentes y Comentarios</h2>
+  <ng-container *ngIf="isLoggedIn(); else noAuth">
+    <form (submit)="enviarPregunta(); $event.preventDefault()">
+      <textarea [(ngModel)]="nuevaPregunta" name="pregunta" placeholder="Escribe tu pregunta o comentario..."
+        rows="3"></textarea>
+      <button type="submit" [disabled]="enviando || !nuevaPregunta.trim()">Enviar</button>
+    </form>
+  </ng-container>
+  <ng-template #noAuth>
+    <div class="faq-login-message">
+      <p>Para comentar o preguntar debes estar registrado e iniciar sesión.</p>
+      <div class="faq-login-buttons">
+        <a class="btn" routerLink="/register">Registrarse</a>
+        <a class="btn" (click)="goToLogin()">Iniciar sesión</a>
+      </div>
+    </div>
+  </ng-template>
+  <div class="faq-list">
+    <div *ngFor="let p of preguntas" class="faq-item">
+      <div class="pregunta">{{ p.pregunta }}</div>
+      <div class="meta">por {{ p.autor }} | {{ p.fecha | date:'short' }}</div>
+      <div class="respuesta" *ngIf="p.respuesta">Respuesta: {{ p.respuesta }}</div>
+      <div class="pendiente" *ngIf="!p.respuesta">(Pendiente de respuesta del administrador)</div>
+    </div>
+  </div>
+</div>

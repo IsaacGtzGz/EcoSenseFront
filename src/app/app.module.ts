@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // ← ¡IMPORTANTE!
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -8,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { LoginComponent } from './pages/login/login.component';
+import { ComentariosAdminComponent } from './pages/admin/comentarios-admin/comentarios-admin.component';
+import { FaqPublicoComponent } from './pages/faq/faq-publico.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsuariosListComponent } from './pages/usuarios-list/usuarios-list.component';
 import { UsuarioFormComponent } from './pages/admin/usuario-form/usuario-form.component';
@@ -22,6 +26,10 @@ import { UmbralesConfigComponent } from './pages/admin/umbrales-config/umbrales-
 import { PerfilSaludComponent } from './pages/perfil-salud/perfil-salud.component';
 import { ReportesComponent } from './pages/reportes/reportes.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+import { AcercaDeComponent } from './pages/acerca-de/acerca-de.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +45,19 @@ import { NotificationsComponent } from './components/notifications/notifications
     UmbralesConfigComponent,
     PerfilSaludComponent,
     ReportesComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    LandingComponent,
+    RegisterComponent,
+    ContactoComponent,
+    AcercaDeComponent,
+  // FAQ y comentarios se agregarán después
+  // Importar el componente de mensajes de contacto
+  ComentariosAdminComponent,
+  FaqPublicoComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
@@ -50,6 +67,7 @@ import { NotificationsComponent } from './components/notifications/notifications
   ],
 
   providers: [
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

@@ -40,6 +40,7 @@ export class UsuarioFormComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/)]],
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      empresa: ['', [Validators.required]],
       contraseña: ['', [Validators.required, Validators.minLength(6)]],
       confirmarContrasena: ['', [Validators.required]],
       rol: ['Usuario', [Validators.required]]
@@ -90,6 +91,7 @@ export class UsuarioFormComponent implements OnInit {
           nombre: usuario.nombre,
           correo: usuario.correo,
           telefono: usuario.telefono,
+          empresa: usuario.empresa, // <-- Asegúrate de incluir empresa
           rol: usuario.rol
         });
         this.loading = false;
@@ -128,6 +130,17 @@ export class UsuarioFormComponent implements OnInit {
       delete formData.confirmarContrasena;
     } else {
       delete formData.confirmarContrasena;
+    }
+
+    // Asegurar que todos los campos obligatorios estén presentes en el PUT
+    if (this.isEditing && this.usuarioId) {
+      formData.idUsuario = this.usuarioId;
+      // Si algún campo obligatorio falta, lo rellenamos con el valor actual del formulario
+      formData.nombre = formData.nombre || this.usuarioForm.get('nombre')?.value || '';
+      formData.correo = formData.correo || this.usuarioForm.get('correo')?.value || '';
+      formData.telefono = formData.telefono || this.usuarioForm.get('telefono')?.value || '';
+      formData.empresa = formData.empresa || this.usuarioForm.get('empresa')?.value || '';
+      formData.rol = formData.rol || this.usuarioForm.get('rol')?.value || '';
     }
 
     if (this.isEditing && this.usuarioId) {

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewChecked} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: false
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements AfterViewChecked {
   nombreUsuario: string = ''; // Inicializa el nombre de usuario
   rolUsuario: string = ''; // Rol del usuario
   estaLogueado: boolean = false; // Inicializa el estado de logueo
@@ -38,6 +39,15 @@ export class HeaderComponent {
       this.nombreUsuario = '';
       this.rolUsuario = '';
       this.esAdministrador = false;
+    }
+  }
+
+  // Aplica la clase admin-layout al body si es admin logueado
+  ngAfterViewChecked() {
+    if (this.esAdministrador && this.estaLogueado) {
+      document.body.classList.add('admin-layout');
+    } else {
+      document.body.classList.remove('admin-layout');
     }
   }
 

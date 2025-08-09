@@ -9,6 +9,7 @@ export interface Usuario {
   contraseña?: string;
   rol: string;
   telefono?: string;
+  empresa: string;
 }
 
 @Injectable({

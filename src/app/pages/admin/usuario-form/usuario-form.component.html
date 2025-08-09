@@ -49,6 +49,7 @@
         <div class="error-message">{{ getFieldError('correo') }}</div>
       </div>
 
+
       <!-- Teléfono -->
       <div class="form-group">
         <label for="telefono">Teléfono</label>
@@ -56,6 +57,15 @@
           [class.error]="getFieldError('telefono')" placeholder="1234567890" autocomplete="off"
           [name]="'user-phone-' + randomId" readonly onfocus="this.removeAttribute('readonly');">
         <div class="error-message">{{ getFieldError('telefono') }}</div>
+      </div>
+
+      <!-- Empresa -->
+      <div class="form-group">
+        <label for="empresa">Empresa / Organización</label>
+        <input type="text" id="empresa" formControlName="empresa" class="form-control"
+          [class.error]="getFieldError('empresa')" placeholder="Nombre de la empresa u organización" autocomplete="off"
+          [name]="'user-company-' + randomId">
+        <div class="error-message">{{ getFieldError('empresa') }}</div>
       </div>
 
       <!-- Rol -->

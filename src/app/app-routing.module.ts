@@ -11,10 +11,25 @@ import { PerfilSaludComponent } from './pages/perfil-salud/perfil-salud.componen
 import { ReportesComponent } from './pages/reportes/reportes.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { LandingComponent } from './pages/landing/landing.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AcercaDeComponent } from './pages/acerca-de/acerca-de.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+import { FaqPublicoComponent } from './pages/faq/faq-publico.component';
+import { ComentariosAdminComponent } from './pages/admin/comentarios-admin/comentarios-admin.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: LandingComponent },
+  { path: 'acerca-de', component: AcercaDeComponent },
+  { path: 'contacto', component: ContactoComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  {
+    path: 'admin/comentarios',
+    component: ComentariosAdminComponent,
+    canActivate: [RoleGuard],
+    data: { role: 'admin' }
+  },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 
   // Reportes (accesible para usuarios autenticados)
@@ -86,6 +101,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['Administrador'] }
   },
+  { path: 'faq', component: FaqPublicoComponent },
 ];
 
 @NgModule({
