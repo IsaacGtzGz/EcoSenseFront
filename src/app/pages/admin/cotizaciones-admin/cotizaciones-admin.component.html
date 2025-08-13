@@ -1,0 +1,27 @@
+<div class="cotizaciones-admin">
+    <h2>Solicitudes de cotización recibidas</h2>
+    <div *ngIf="loading">Cargando cotizaciones...</div>
+    <div *ngIf="error">{{ error }}</div>
+    <div *ngIf="!loading && cotizaciones.length === 0">No hay solicitudes de cotización.</div>
+    <div *ngFor="let cotizacion of cotizaciones" class="cotizacion-item">
+        <div><strong>{{ cotizacion.nombre }}</strong></div>
+        <div>Correo: <span>{{ cotizacion.correo }}</span> <button (click)="copiarCorreo(cotizacion.correo)">📋</button>
+        </div>
+        <div>Tipo de producto: {{ cotizacion.tipoProducto }}</div>
+        <div>Cantidad: {{ cotizacion.cantidad }}</div>
+        <div>Requerimientos: {{ cotizacion.requerimientos }}</div>
+        <div>Costo estimado: ${{ cotizacion.costo }} MXN</div>
+        <button (click)="cotizacion.mostrarRespuesta = !cotizacion.mostrarRespuesta">Responder</button>
+        <div *ngIf="cotizacion.mostrarRespuesta">
+            <form (ngSubmit)="enviarRespuesta(cotizacion)">
+                <label>Asunto:</label>
+                <input [(ngModel)]="cotizacion.asuntoRespuesta" name="asuntoRespuesta" required>
+                <label>Mensaje:</label>
+                <textarea [(ngModel)]="cotizacion.textoRespuesta" name="textoRespuesta" required></textarea>
+                <button type="submit">Enviar respuesta</button>
+            </form>
+            <div *ngIf="cotizacion.respuestaEnviada" class="exito">Respuesta enviada correctamente.</div>
+            <div *ngIf="cotizacion.errorRespuesta" class="error">{{ cotizacion.errorRespuesta }}</div>
+        </div>
+    </div>
+</div>

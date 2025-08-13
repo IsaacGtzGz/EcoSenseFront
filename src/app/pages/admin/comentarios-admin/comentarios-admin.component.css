@@ -2,99 +2,151 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  background: linear-gradient(135deg, #2E8B57 0%, #1E6B47 30%, #3A7CA8 70%, #2980B9 100%);
+  background: linear-gradient(135deg, #eafbe7 0%, #e0f7fa 100%);
   min-height: 100vh;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44,95,45,0.10);
 }
-
+.admin-comentarios h2 {
+  color: #2c5f2d;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
   margin-top: 1rem;
+  background: none;
 }
 th, td {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  text-align: left;
-}
-th {
-  background: #e0f7fa;
-}
-input {
-  padding: 0.3rem;
-  margin-right: 0.5rem;
-}
-button {
-  padding: 0.3rem 0.7rem;
-  margin: 0 0.2rem;
-  border-radius: 4px;
-  border: none;
-  background: #009688;
-  color: #fff;
-  cursor: pointer;
-}
-button:hover {
-  background: #00796b;
-}
-.admin-comentarios {
-  padding: 2rem;
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
   background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-}
-th, td {
-  border: 1px solid #e0e0e0;
-  padding: 0.7rem 0.5rem;
+  border: none;
+  box-shadow: 0 2px 8px rgba(44,95,45,0.06);
+  border-radius: 12px;
+  padding: 1.1rem 0.8rem;
   text-align: left;
+  font-size: 1.08rem;
 }
 th {
+  background: #eafbe7;
+  color: #2c5f2d;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+tr {
+  transition: box-shadow 0.2s;
+}
+tr:hover {
+  box-shadow: 0 4px 16px rgba(44,95,45,0.12);
+}
+.comentario-texto {
+  font-size: 1.12rem;
+  margin-bottom: 0.2rem;
+  color: #298d4a;
+}
+.comentario-estrellas {
+  color: #FFD700;
+  font-size: 1.15rem;
+  margin-bottom: 0.2rem;
+}
+.comentario-estrellas .filled {
+  color: #FFD700;
+}
+.comentario-respuesta {
   background: #e0f7fa;
-  font-weight: 600;
-  color: #009688;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: #2c5f2d;
+  font-weight: 500;
+  margin-top: 0.2rem;
 }
 input {
-  padding: 0.4rem 0.7rem;
-  margin-right: 0.5rem;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   border: 1px solid #b2dfdb;
   background: #f1f8e9;
+  font-size: 1rem;
 }
 .btn-accion {
-  padding: 0.35rem 0.9rem;
-  margin: 0 0.2rem;
-  border-radius: 4px;
-  border: none;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.btn-accion.responder {
-  background: #4caf50;
-}
-.btn-accion.responder:hover {
-  background: #388e3c;
-}
-.btn-accion.destacar {
-  background: #ffd600;
-  color: #333;
-}
-.btn-accion.destacar:hover {
-  background: #ffc107;
+  padding: 0.45rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(44,95,45,0.08);
+  transition: background 0.2s, color 0.2s;
 }
 .btn-accion.eliminar {
-  background: #e53935;
+  background: #e74c3c;
+  color: #fff;
 }
 .btn-accion.eliminar:hover {
-  background: #b71c1c;
+  background: #c0392b;
+}
+.btn-accion.destacar {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0.2rem 0.5rem;
+}
+.btn-accion.destacar:hover {
+  background: #ffe066;
+}
+.btn-accion.responder {
+  background: #2c5f2d;
+  color: #fff;
+}
+.btn-accion.responder:hover {
+  background: #298d4a;
+}
+td {
+  vertical-align: top;
+}
+tr td:nth-child(5) button {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  color: #FFD700;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+tr td:nth-child(5) button span {
+  font-size: 1.3rem;
+}
+tr td:nth-child(5) button span:not([ng-reflect-ng-if]) {
+  color: #bbb;
+}
+tr td:nth-child(5) button span[ng-reflect-ng-if] {
+  color: #FFD700;
+  font-weight: bold;
+}
+tr td:nth-child(5) button:focus {
+  outline: 2px solid #FFD700;
+}
+tr td:nth-child(5) {
+  text-align: center;
+}
+tr td:nth-child(6) {
+  text-align: center;
+}
+/* Destacado visual */
+tr td:nth-child(5) button span[ng-reflect-ng-if]::after {
+  content: ' Destacado';
+  font-size: 0.9rem;
+  color: #2c5f2d;
+  margin-left: 0.3rem;
+}
+.icon-star {
+  font-size: 1.7rem;
+  vertical-align: middle;
+  color: #bbb;
+  transition: color 0.2s, transform 0.2s;
+}
+.icon-star.destacado {
+  color: #FFD700;
+  text-shadow: 0 2px 8px rgba(44,95,45,0.10);
+  transform: scale(1.15);
 }

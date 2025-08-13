@@ -17,11 +17,14 @@ import { AcercaDeComponent } from './pages/acerca-de/acerca-de.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { FaqPublicoComponent } from './pages/faq/faq-publico.component';
 import { ComentariosAdminComponent } from './pages/admin/comentarios-admin/comentarios-admin.component';
+import { ContactoMensajesComponent } from './pages/admin/contacto-mensajes/contacto-mensajes.component';
+import { PerfilClienteComponent } from './pages/perfil-cliente/perfil-cliente.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'acerca-de', component: AcercaDeComponent },
   { path: 'contacto', component: ContactoComponent },
+  { path: 'producto', loadComponent: () => import('./pages/producto/producto.component').then(m => m.ProductoComponent) },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
@@ -102,6 +105,20 @@ const routes: Routes = [
     data: { roles: ['Administrador'] }
   },
   { path: 'faq', component: FaqPublicoComponent },
+  {
+    path: 'cotizar',
+    loadComponent: () => import('./pages/cotizar/cotizar.component').then(m => m.CotizarComponent)
+  },
+    {
+      path: 'admin/contacto-mensajes',
+      loadComponent: () => import('./pages/admin/contacto-mensajes/contacto-mensajes.component').then(m => m.ContactoMensajesComponent),
+      canActivate: [RoleGuard], // Solo admin
+    },
+  {
+    path: 'perfil',
+    component: PerfilClienteComponent,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

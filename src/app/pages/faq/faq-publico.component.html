@@ -4,6 +4,12 @@
     <form (submit)="enviarPregunta(); $event.preventDefault()">
       <textarea [(ngModel)]="nuevaPregunta" name="pregunta" placeholder="Escribe tu pregunta o comentario..."
         rows="3"></textarea>
+      <label>
+        Valoración:
+        <select [(ngModel)]="estrellas" name="estrellas">
+          <option *ngFor="let star of [1,2,3,4,5]" [value]="star">{{star}} ★</option>
+        </select>
+      </label>
       <button type="submit" [disabled]="enviando || !nuevaPregunta.trim()">Enviar</button>
     </form>
   </ng-container>
@@ -16,12 +22,24 @@
       </div>
     </div>
   </ng-template>
-  <div class="faq-list">
-    <div *ngFor="let p of preguntas" class="faq-item">
-      <div class="pregunta">{{ p.pregunta }}</div>
-      <div class="meta">por {{ p.autor }} | {{ p.fecha | date:'short' }}</div>
-      <div class="respuesta" *ngIf="p.respuesta">Respuesta: {{ p.respuesta }}</div>
-      <div class="pendiente" *ngIf="!p.respuesta">(Pendiente de respuesta del administrador)</div>
+  <!-- Preguntas frecuentes institucionales -->
+  <app-faq-list></app-faq-list>
+
+  <div class="faq-comentarios">
+    <h3>Comentarios y Valoraciones de Clientes</h3>
+    <div *ngFor="let c of comentariosOrdenados" class="faq-comentario-item" [class.destacado]="c.destacado">
+      <span class="faq-comentario-usuario">{{c.autor}}</span>
+      <span class="faq-comentario-fecha">{{c.fecha | date:'short'}}</span>
+      <span class="faq-comentario-estrellas" *ngIf="c.estrellas">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <span [class.filled]="star <= c.estrellas">★</span>
+        </ng-container>
+        {{c.estrellas}}/5
+      </span>
+      <div class="faq-comentario-texto">{{c.pregunta}}</div>
+      <div class="faq-comentario-respuesta" *ngIf="c.respuesta">
+        <strong>Respuesta:</strong> {{c.respuesta}}
+      </div>
     </div>
   </div>
 </div>

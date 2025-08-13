@@ -11,7 +11,9 @@
   <nav class="nav-menu" *ngIf="!estaLogueado">
     <a routerLink="/">Inicio</a>
     <a routerLink="/acerca-de">Acerca de</a>
+    <a routerLink="/producto">Producto</a>
     <a routerLink="/faq">FAQ / Comentarios</a>
+    <a routerLink="/cotizar">Cotizar</a>
     <a routerLink="/contacto">Contáctanos</a>
     <a routerLink="/login">Iniciar sesión</a>
   </nav>
@@ -51,6 +53,8 @@
       comentarios</button>
     <button class="btn-admin" routerLink="/reportes"><i class="fas fa-chart-bar"></i> Reportes</button>
     <button class="btn-admin" routerLink="/perfil-salud"><i class="fas fa-heart"></i> Salud</button>
+    <button class="btn-admin" routerLink="/admin/contacto-mensajes"><i class="fas fa-envelope"></i> Mensajes de
+      contacto</button>
   </nav>
   <div class="sidebar-user">
     <div class="user-avatar">👤</div>

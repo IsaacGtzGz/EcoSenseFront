@@ -1,44 +1,204 @@
-/* Institutional and team styles */
-.acerca-de-page {
-	width: 100%;
-	margin: 0;
-	background: #fff;
-	border-radius: 16px;
-	box-shadow: 0 4px 24px rgba(44,95,45,0.08);
-	padding: 0;
+/* Fondo institucional y layout principal */
+.acerca-de-landing-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9 0%, #f8f9fa 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 40px;
 }
-.acerca-de-page h1 {
-	color: #2c5f2d;
-	margin-bottom: 2rem;
-	text-align: center;
+
+.acerca-de-hero-card {
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(44, 95, 45, 0.12);
+  border-radius: 18px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-top: 40px;
+  margin-bottom: 32px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
 }
-.institucional h2 {
-	color: #27ae60;
-	margin-top: 2.5rem;
-	font-size: 1.5rem;
+
+.acerca-de-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(44, 95, 45, 0.15);
+  background: #e8f5e9;
 }
-.institucional ul {
-	margin-left: 2.5rem;
-	margin-bottom: 2.5rem;
+
+.acerca-de-title {
+  font-size: 2.2rem;
+  color: #2c5f2d;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
 }
-.equipo {
-	margin-top: 3rem;
+
+.acerca-de-desarrolladores {
+  color: #4caf50;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
-.equipo-list {
-	display: flex;
-	gap: 2.5rem;
-	justify-content: center;
-	flex-wrap: wrap;
+
+/* Tarjetas institucionales y de negocio */
+.acerca-de-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  justify-content: flex-start;
+  margin-bottom: 40px;
+  width: 95%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.equipo-item {
-	background: #f8f8f8;
-	border-radius: 10px;
-	padding: 2rem 2.5rem;
-	box-shadow: 0 2px 8px rgba(44,95,45,0.04);
-	text-align: center;
-	min-width: 220px;
+
+.acerca-de-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(44, 95, 45, 0.08);
+  padding: 2.5rem 2.5rem;
+  min-width: 320px;
+  max-width: 600px;
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-left: 6px solid #4caf50;
 }
-.equipo-item img {
-	border-radius: 50%;
-	margin-bottom: 1rem;
+
+.acerca-de-card h2 {
+  color: #2c5f2d;
+  font-size: 1.3rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.acerca-de-card ul {
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.acerca-de-card li {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.acerca-de-card p {
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Equipo */
+.acerca-de-equipo {
+  margin-top: 32px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.acerca-de-equipo h2 {
+  color: #2c5f2d;
+  font-size: 1.7rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.acerca-de-team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.acerca-de-team-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(44, 95, 45, 0.08);
+  padding: 1.5rem 1rem;
+  min-width: 200px;
+  max-width: 250px;
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 5px solid #4caf50;
+}
+
+.acerca-de-avatar {
+  width: 60px;
+  height: 60px;
+  background: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 2px 8px rgba(44, 95, 45, 0.12);
+}
+
+.acerca-de-team-card h3 {
+  color: #2c5f2d;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+}
+
+.acerca-de-team-card span {
+  color: #666;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .acerca-de-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  .acerca-de-card {
+    padding: 1.2rem 0.7rem;
+    min-width: 180px;
+    max-width: 100%;
+  }
+  .acerca-de-team-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .acerca-de-hero-card {
+    padding: 1.2rem 0.5rem;
+  }
+  .acerca-de-card {
+    padding: 1.2rem 0.7rem;
+    min-width: 180px;
+    max-width: 100%;
+  }
+  .acerca-de-team-card {
+    padding: 1rem 0.5rem;
+    min-width: 140px;
+    max-width: 100%;
+  }
+}
+
+/* Scrollbar bonito */
+.acerca-de-landing-bg::-webkit-scrollbar {
+  width: 8px;
+  background: #e8f5e9;
+}
+.acerca-de-landing-bg::-webkit-scrollbar-thumb {
+  background: #4caf50;
+  border-radius: 8px;
 }

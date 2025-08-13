@@ -1,0 +1,28 @@
+<div class="cotizar-form">
+    <h2>Solicita tu Cotización</h2>
+    <form (ngSubmit)="enviarCotizacion()" #form="ngForm">
+        <label>Nombre:
+            <input type="text" [(ngModel)]="nombre" name="nombre" required />
+        </label>
+        <label>Correo electrónico:
+            <input type="email" [(ngModel)]="correo" name="correo" required />
+        </label>
+        <label>Tipo de producto:
+            <input type="text" [(ngModel)]="tipoProducto" name="tipoProducto" readonly />
+        </label>
+        <label>Cantidad:
+            <input type="number" [(ngModel)]="cantidad" name="cantidad" min="1" required />
+        </label>
+        <div class="cotizar-precio">
+            <strong>Precio base por unidad:</strong> $48,500 MXN<br>
+            <span *ngIf="requerimientos.trim().length > 0">* Se suma 10% por requerimientos especiales.</span>
+        </div>
+        <label>Requerimientos especiales:
+            <textarea [(ngModel)]="requerimientos" name="requerimientos" rows="3"></textarea>
+        </label>
+        <button type="submit" [disabled]="enviando || !form.form.valid">Calcular y Solicitar</button>
+    </form>
+    <div *ngIf="resultado" class="cotizar-resultado">
+        <strong>{{resultado}}</strong>
+    </div>
+</div>

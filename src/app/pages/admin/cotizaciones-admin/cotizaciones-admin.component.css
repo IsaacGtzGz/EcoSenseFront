@@ -1,0 +1,23 @@
+.cotizaciones-admin {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.cotizacion-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+}
+.cotizacion-item button {
+  margin-left: 0.5rem;
+}
+.exito {
+  color: green;
+  margin-top: 0.5rem;
+}
+.error {
+  color: red;
+  margin-top: 0.5rem;
+}

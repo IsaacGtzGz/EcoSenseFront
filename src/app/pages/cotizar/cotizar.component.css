@@ -1,0 +1,54 @@
+/* Estilos modernos para el formulario de cotización */
+.cotizar-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(44,95,45,0.10);
+  padding: 2rem 2.5rem;
+}
+.cotizar-form h2 {
+  color: #2c5f2d;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+label {
+  display: block;
+  margin-bottom: 1.1rem;
+  font-weight: 500;
+  color: #298d4a;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #2c5f2d33;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  background: #f8f8f8;
+}
+button[type="submit"] {
+  background: #2c5f2d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.cotizar-resultado {
+  margin-top: 2rem;
+  background: #eafbe7;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #2c5f2d;
+  text-align: center;
+  font-size: 1.15rem;
+}

@@ -1,0 +1,35 @@
+<div class="comentarios-producto">
+  <div class="comentarios-header">
+    <span class="estrellas-promedio">
+      <ng-container *ngFor="let star of [1,2,3,4,5]">
+        <span [class.filled]="star <= promedioEstrellas">★</span>
+      </ng-container>
+      {{ promedioEstrellas | number:'1.1-1' }}/5
+    </span>
+    <span class="comentarios-cantidad">({{ comentarios.length }} valoraciones)</span>
+  </div>
+
+  <div class="comentarios-list">
+    <div *ngFor="let c of comentarios" class="comentario-item">
+      <span class="comentario-usuario">{{c.usuario}}</span>
+      <span class="comentario-estrellas">
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+          <span [class.filled]="star <= c.estrellas">★</span>
+        </ng-container>
+      </span>
+      <span class="comentario-fecha">{{c.fecha}}</span>
+      <div class="comentario-texto">{{c.comentario}}</div>
+    </div>
+  </div>
+
+  <div class="comentario-form">
+    <textarea [(ngModel)]="comentarioTexto" placeholder="Escribe tu comentario..."></textarea>
+    <label>
+      Valoración:
+      <select [(ngModel)]="comentarioEstrellas">
+        <option *ngFor="let star of [1,2,3,4,5]" [value]="star">{{star}} ★</option>
+      </select>
+    </label>
+    <button (click)="agregarComentario()">Enviar</button>
+  </div>
+</div>

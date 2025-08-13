@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // ← ¡IMPORTANTE!
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -30,6 +30,12 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { AcercaDeComponent } from './pages/acerca-de/acerca-de.component';
+import { ComentariosProductoComponent } from './components/comentarios-producto/comentarios-producto.component';
+import { FaqListComponent } from './components/faq-list/faq-list.component';
+import { PerfilClienteComponent } from './pages/perfil-cliente/perfil-cliente.component';
+import { MisProductosComponent } from './pages/mis-productos/mis-productos.component';
+import { MisComprasComponent } from './pages/mis-compras/mis-compras.component';
+// import { ContactoMensajesComponent } from './pages/admin/contacto-mensajes/contacto-mensajes.component';
 
 @NgModule({
   declarations: [
@@ -50,10 +56,9 @@ import { AcercaDeComponent } from './pages/acerca-de/acerca-de.component';
     RegisterComponent,
     ContactoComponent,
     AcercaDeComponent,
-  // FAQ y comentarios se agregarán después
-  // Importar el componente de mensajes de contacto
   ComentariosAdminComponent,
   FaqPublicoComponent,
+  PerfilClienteComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,18 +68,24 @@ import { AcercaDeComponent } from './pages/acerca-de/acerca-de.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    FaqListComponent,
+    ComentariosProductoComponent,
+    MisProductosComponent,
+    MisComprasComponent
   ],
+
+  exports: [FaqPublicoComponent],
 
   providers: [
     DatePipe,
+    DecimalPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
     }
   ],
-
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,4 +22,12 @@ export class ContactoService {
   obtenerMensajes(): Observable<MensajeContacto[]> {
     return this.http.get<MensajeContacto[]>(this.apiUrl);
   }
+
+  getMensajes() {
+    return this.http.get<any[]>(`${this.apiUrl}/mensajes`);
+  }
+
+  enviarRespuesta(data: { email: string; asunto: string; mensaje: string }) {
+    return this.http.post<any>(`${this.apiUrl}/responder`, data);
+  }
 }

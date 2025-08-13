@@ -17,8 +17,15 @@ export class FaqPublicoComponent implements OnInit {
     // No hace nada, ya no se requiere login
   }
   preguntas: FaqComentario[] = [];
+  get comentariosOrdenados(): FaqComentario[] {
+    if (!this.preguntas?.length) return [];
+    const destacados = this.preguntas.filter(c => c.destacado);
+    const normales = this.preguntas.filter(c => !c.destacado);
+    return [...destacados, ...normales];
+  }
   nuevaPregunta = '';
   enviando = false;
+  estrellas = 5;
 
   constructor(private faqService: FaqService) {}
 
@@ -36,12 +43,14 @@ export class FaqPublicoComponent implements OnInit {
       pregunta: this.nuevaPregunta,
       autor: 'Anónimo',
       fecha: new Date().toISOString(),
-      destacado: false
+      destacado: false,
+      estrellas: this.estrellas
     };
     this.faqService.enviarComentario(pregunta).subscribe({
       next: () => {
         (window as any).mostrarNotificacion?.('¡Comentario enviado!', 'success');
         this.nuevaPregunta = '';
+        this.estrellas = 5;
         this.enviando = false;
         this.faqService.obtenerComentarios().subscribe({
           next: (data: FaqComentario[]) => this.preguntas = data

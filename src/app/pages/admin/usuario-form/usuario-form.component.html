@@ -61,9 +61,9 @@
 
       <!-- Empresa -->
       <div class="form-group">
-        <label for="empresa">Empresa / Organización</label>
+        <label for="empresa">Empresa</label>
         <input type="text" id="empresa" formControlName="empresa" class="form-control"
-          [class.error]="getFieldError('empresa')" placeholder="Nombre de la empresa u organización" autocomplete="off"
+          [class.error]="getFieldError('empresa')" placeholder="Nombre de la empresa" autocomplete="off"
           [name]="'user-company-' + randomId">
         <div class="error-message">{{ getFieldError('empresa') }}</div>
       </div>

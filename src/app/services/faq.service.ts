@@ -9,6 +9,7 @@ export interface FaqComentario {
   autor: string;
   fecha: string;
   destacado?: boolean;
+  estrellas?: number;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -1,0 +1,43 @@
+<div class="contacto-mensajes-container">
+  <h2>Mensajes de contacto recibidos</h2>
+  <div *ngIf="loading" class="loading">Cargando mensajes...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="!loading && mensajes.length === 0" class="empty">No hay mensajes de contacto.</div>
+  <div *ngIf="!loading && mensajes.length > 0">
+    <div *ngFor="let mensaje of mensajes" class="mensaje-card">
+      <div class="mensaje-header">
+        <span class="mensaje-nombre">{{ mensaje.nombre }}</span>
+        <span class="mensaje-fecha">{{ mensaje.fechaEnvio | date:'short' }}</span>
+      </div>
+      <div class="mensaje-correo">
+        <strong>Correo:</strong>
+        <span>{{ mensaje.correo }}</span>
+        <button (click)="copiarCorreo(mensaje.correo)" title="Copiar correo">📋</button>
+      </div>
+      <div class="mensaje-asunto">
+        <strong>Asunto:</strong> {{ mensaje.asunto }}
+      </div>
+      <div class="mensaje-texto">
+        <strong>Mensaje:</strong>
+        <p>{{ mensaje.mensaje }}</p>
+      </div>
+      <!-- Formulario de respuesta -->
+      <div class="respuesta-panel">
+        <button (click)="mensaje.mostrarRespuesta = !mensaje.mostrarRespuesta" class="btn-responder">
+          {{ mensaje.mostrarRespuesta ? 'Cancelar' : 'Responder' }}
+        </button>
+        <form *ngIf="mensaje.mostrarRespuesta" (ngSubmit)="enviarRespuesta(mensaje)" class="respuesta-form">
+          <label>Asunto de respuesta:</label>
+          <input type="text" [(ngModel)]="mensaje.asuntoRespuesta" name="asuntoRespuesta{{mensaje.id}}" required>
+          <label>Mensaje de respuesta:</label>
+          <textarea [(ngModel)]="mensaje.textoRespuesta" name="textoRespuesta{{mensaje.id}}" rows="5"
+            required></textarea>
+          <small>Puedes editar la firma al final del mensaje.</small>
+          <button type="submit" class="btn-enviar">Enviar respuesta</button>
+        </form>
+        <div *ngIf="mensaje.respuestaEnviada" class="respuesta-exito">¡Respuesta enviada!</div>
+        <div *ngIf="mensaje.errorRespuesta" class="respuesta-error">{{ mensaje.errorRespuesta }}</div>
+      </div>
+    </div>
+  </div>
+</div>

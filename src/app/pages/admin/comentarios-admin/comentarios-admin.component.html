@@ -15,7 +15,15 @@
       <tr *ngFor="let c of comentarios">
         <td>{{ c.fecha | date:'short' }}</td>
         <td>{{ c.autor }}</td>
-        <td>{{ c.pregunta }}</td>
+        <td>
+          <div class="comentario-texto">{{ c.pregunta }}</div>
+          <div class="comentario-estrellas" *ngIf="c.estrellas">
+            <ng-container *ngFor="let star of [1,2,3,4,5]">
+              <span [class.filled]="star <= c.estrellas">★</span>
+            </ng-container>
+            {{c.estrellas}}/5
+          </div>
+        </td>
         <td>
           <span *ngIf="c.respuesta">{{ c.respuesta }}</span>
           <span *ngIf="!c.respuesta">(Pendiente)</span>
@@ -25,9 +33,9 @@
           </div>
         </td>
         <td>
-          <button (click)="destacarComentario(c.id, !c.destacado)">
-            <span *ngIf="c.destacado">⭐</span>
-            <span *ngIf="!c.destacado">-</span>
+          <button class="btn-accion destacar" (click)="destacarComentario(c.id, !c.destacado)">
+            <span *ngIf="c.destacado" class="icon-star destacado">&#9733;</span>
+            <span *ngIf="!c.destacado" class="icon-star">&#9734;</span>
           </button>
         </td>
         <td>

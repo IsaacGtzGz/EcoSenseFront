@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuariosService, Usuario } from '../../../services/usuarios.service';
@@ -11,6 +11,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './usuario-form.component.css'
 })
 export class UsuarioFormComponent implements OnInit {
+  @Input() modoCliente: boolean = false;
   usuarioForm: FormGroup;
   isEditing = false;
   loading = false;
@@ -24,9 +25,11 @@ export class UsuarioFormComponent implements OnInit {
   createdUserId: number | null = null;
 
   // ID fijo para evitar errores de ExpressionChanged
-  randomId = Math.random().toString(36).substring(7);  roles = [
+  randomId = Math.random().toString(36).substring(7);
+  roles = [
     { value: 'Administrador', label: 'Administrador' },
-    { value: 'Usuario', label: 'Usuario' }
+    { value: 'Usuario', label: 'Usuario' },
+    { value: 'Cliente', label: 'Cliente' }
   ];
 
   constructor(
@@ -48,25 +51,44 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Verificar que sea administrador
-    if (!this.authService.isAdmin()) {
-      this.router.navigate(['/dashboard']);
-      return;
-    }
-
-    // Verificar si estamos editando
-    this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.usuarioId = +params['id'];
+    // Si es modo cliente, cargar el usuario autenticado y ajustar el formulario
+    if (this.modoCliente) {
+      const usuarioActual = this.authService.getUser();
+      const usuarioId = this.authService.getCurrentUserId();
+      if (usuarioActual && usuarioId) {
+        this.usuarioId = usuarioId;
         this.isEditing = true;
         this.cargarUsuario();
+        // Ocultar campos de rol y empresa
+        this.usuarioForm.get('rol')?.disable();
+        this.usuarioForm.get('empresa')?.disable();
         // En modo edición, la contraseña no es requerida
         this.usuarioForm.get('contraseña')?.clearValidators();
         this.usuarioForm.get('confirmarContrasena')?.clearValidators();
         this.usuarioForm.get('contraseña')?.updateValueAndValidity();
         this.usuarioForm.get('confirmarContrasena')?.updateValueAndValidity();
       }
-    });
+    } else {
+      // Verificar que sea administrador
+      if (!this.authService.isAdmin()) {
+        this.router.navigate(['/dashboard']);
+        return;
+      }
+
+      // Verificar si estamos editando
+      this.route.params.subscribe(params => {
+        if (params['id']) {
+          this.usuarioId = +params['id'];
+          this.isEditing = true;
+          this.cargarUsuario();
+          // En modo edición, la contraseña no es requerida
+          this.usuarioForm.get('contraseña')?.clearValidators();
+          this.usuarioForm.get('confirmarContrasena')?.clearValidators();
+          this.usuarioForm.get('contraseña')?.updateValueAndValidity();
+          this.usuarioForm.get('confirmarContrasena')?.updateValueAndValidity();
+        }
+      });
+    }
   }
 
   passwordMatchValidator(form: FormGroup) {
@@ -91,7 +113,6 @@ export class UsuarioFormComponent implements OnInit {
           nombre: usuario.nombre,
           correo: usuario.correo,
           telefono: usuario.telefono,
-          empresa: usuario.empresa, // <-- Asegúrate de incluir empresa
           rol: usuario.rol
         });
         this.loading = false;
@@ -217,7 +238,11 @@ export class UsuarioFormComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/admin/usuarios']);
+    if (this.modoCliente) {
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.router.navigate(['/admin/usuarios']);
+    }
   }
 
   // Validar duplicados antes de enviar
